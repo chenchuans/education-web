@@ -9,9 +9,14 @@ const routes: RouteRecordRaw[] = [
     },
     {
         path: '/',
-        name: 'Home',
-        component: () => import('@/page/Home.vue'),
+        redirect: '/home',
+        component: () => import('@/layout/HomeBar.vue'),
         children: [
+            {
+                path: '/home',
+                name: 'Home',
+                component: () => import('@/page/Home.vue'),
+            },
             {
                 path: '/content-list',
                 name: 'ContentList',
