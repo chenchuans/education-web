@@ -31,7 +31,7 @@ import { Options, Vue } from "vue-class-component";
         }
     }
 })
-export default class Button extends Vue {}
+export default class Button extends Vue {};
 </script>
 <style lang="scss" scoped>
 $fontColor: #fa8919;
@@ -41,6 +41,7 @@ $fontColor: #fa8919;
     display: inline-block;
     text-align: center;
     border-radius: 5px;
+    cursor: pointer;
 }
 .light {
     color: $fontColor;

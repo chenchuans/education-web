@@ -1,6 +1,7 @@
 <template>
     <div class="page">
-      2122
+      2122222
+      3333
     </div>
 </template>
 
@@ -11,7 +12,7 @@ import { Options, Vue } from "vue-class-component";
     components: {
     }
 })
-export default class Home extends Vue {}
+export default class Home extends Vue {};
 </script>
 <style lang="scss" scoped>
     

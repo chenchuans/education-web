@@ -33,6 +33,17 @@ import { getUsername, removeUid, removeToken, removeUsername } from '@/libs/sess
             }
         }
     },
+    created() {
+        // if (getUsername()) {
+        //     this.routeList =  [ concat
+        //         {name: '首页', path: '/home'},
+        //         {name: '我的课程', path: '/content-my'},
+        //         {name: '个人中心', path: '/user-center'},
+        //     ];
+        // } else {
+        //      this.routeList =  [{name: '首页', path: '/home'}];
+        // }
+    },
     methods: {
         toRouteLink(item) {
             this.$router.push(item.path);
@@ -54,16 +65,13 @@ export default class HomeBar extends Vue {
 }
 </script>
 <style lang="scss" scoped>
-// @import url('../styles/variables.scss');
-$fontColor: #fa8919;
-$orangeBackground: #fbf5ee;
-$homeBarBorderColor: #eaeaea;
+@import '@/styles/variables.scss';
 .home-bar {
     width: 100%;
     height: 70px;
     position: fixed;
     top: 0;
-    background-color: #fff;
+    background-color: $white;
     border-bottom: 1px solid $homeBarBorderColor;
     font: 400 16px/70px '';
     &-wrapper {
@@ -84,7 +92,7 @@ $homeBarBorderColor: #eaeaea;
                 cursor: pointer;
             }
             .select-item {
-                color: $fontColor;
+                color: $orangeFontColor;
                 font-weight: 500;
             }
         }

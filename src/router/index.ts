@@ -4,7 +4,7 @@ import { getUid, getToken } from '@/libs/session';
 const routes: RouteRecordRaw[] = [
     {
         path: '/login',
-        name: 'Login',
+        name: '登录',
         component: () => import('@/pages/Login.vue'),
     },
     {
@@ -13,17 +13,17 @@ const routes: RouteRecordRaw[] = [
         component: () => import('@/layout/HomeBar.vue'),
         children: [
             {
-                path: '/home',
+                path: 'home',
                 name: '首页',
                 component: () => import('@/pages/Home.vue'),
             },
             {
-                path: '/content-my',
+                path: 'content-my',
                 name: '我的课程',
                 component: () => import('@/pages/ContentMy.vue'),
             },
             {
-                path: '/user-center',
+                path: 'user-center',
                 name: '用户中心',
                 component: () => import('@/pages/UserCenter.vue'),
             },

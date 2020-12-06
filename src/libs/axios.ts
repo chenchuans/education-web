@@ -7,6 +7,10 @@ import axios, { AxiosInstance, AxiosRequestConfig, AxiosPromise, AxiosResponse }
 import { getUid, getToken, removeToken, removeUid, removeUsername } from '@/libs/session.ts';
 // import { Message } from 'element-ui';
 
+const validateUrlList: string[] = [
+    '/font/home/courseDetail', '/font/home/list', '/user/userSmsLogin', '/user/userGetVC',
+    ];
+
 class Ajax {
     public request(options: AxiosRequestConfig): AxiosPromise {
         const instance: AxiosInstance = axios.create();
@@ -15,16 +19,18 @@ class Ajax {
         return instance(options);
     }
 
+
     private interceptors(instance: AxiosInstance, url?: string) {
         // 请求拦截
         instance.interceptors.request.use((config: AxiosRequestConfig) => {
-            if (!(url as string).includes('user/adminLogin')) {
+            const validateUrl: string = (url as string).slice(-10);
+            if (!validateUrlList.includes(validateUrl)) {
                 config.headers['token'] = getToken();
                 config.headers['uuid'] = getUid();
             }
-            if ((url as string).includes('common/upload')) {
-                config.headers['Content-Type'] = 'multipart/form-data;';
-            }
+            // if ((url as string).includes('common/upload')) {
+            //     config.headers['Content-Type'] = 'multipart/form-data;';
+            // }
             return config;
         }, error => Promise.reject(error));
 

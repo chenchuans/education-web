@@ -112,10 +112,7 @@ import { setUsername, setUid, setToken } from '@/libs/session';
 export default class Login extends Vue {};
 </script>
 <style lang="scss" scoped>
-$errorColor: #ff3b30;
-$formColor: #4c4c4c;
-$fontColor: #fa8919;
-$tipsColor: #b2b2b2;
+@import '@/styles/variables.scss';
 .login {
     background-image: url('./../assets/img/bag.png');
     background-size: 1920px 1080px;
@@ -129,9 +126,9 @@ $tipsColor: #b2b2b2;
         min-height: 400px;
         padding: 30px 40px;
         margin: 100px auto 0;
-        background: #fff;
+        background: $white;
         border-radius: 8px;
-        box-shadow: 0 0 14px 2px hsla(0,0%,87.1%,.46);
+        box-shadow: 0 0 14px 2px $shadowColor;
         &-form {
             padding-top: 20px; 
             &-item {
@@ -146,7 +143,7 @@ $tipsColor: #b2b2b2;
                     color: $formColor;
                     font: 500 18px/50px '';
                     -webkit-appearance: textfield;
-                    border-bottom: 1px solid #e8e8e8;
+                    border-bottom: 1px solid $inputBorderColor;
                 }
                 &-error {
                     color: $errorColor;
@@ -162,7 +159,7 @@ $tipsColor: #b2b2b2;
                     position: absolute;
                     right: 0px;
                     top: 10px;
-                    color: $fontColor;
+                    color: $orangeFontColor;
                     font: 400 16px/2 '';
                     text-align: right;
                     width: 160px;
