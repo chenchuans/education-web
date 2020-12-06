@@ -1,17 +1,17 @@
 <template>
-    <div class="page">
-     
+    <div>
+        <HomeBar/>
+        <router-view/>
     </div>
 </template>
 
 <script lang="ts">
 import { Options, Vue } from "vue-class-component";
-
+import HomeBar from '@/layout/HomeBar.vue';
 @Options({
-    components: {
-    }
+    components: { HomeBar }
 })
-export default class ContentMy extends Vue {};
+export default class Layout extends Vue {};
 </script>
 <style lang="scss" scoped>
     

@@ -15,5 +15,6 @@ import { Options, Vue } from "vue-class-component";
 export default class Home extends Vue {};
 </script>
 <style lang="scss" scoped>
-    
+// @import '@/styles/variables.scss';
+
 </style>

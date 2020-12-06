@@ -169,7 +169,7 @@ export default class Login extends Vue {};
                     cursor: pointer;
                 }
                 .disabled {
-                    cursor: none;
+                    cursor: not-allowed;
                     color: $tipsColor;
                 }
             }

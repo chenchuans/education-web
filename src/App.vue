@@ -4,12 +4,13 @@
     </div>
 </template>
 
-<style lang="scss">
-@import url('./styles/global.scss');
+<style lang="scss" scoped>
+@import '@/styles/variables.scss';
+@import '@/styles/global.scss';
 .page {
     width: 1200px;
     margin: 0 auto;
     padding-top: 70px;
-    background-color: red;
+    background-color: $white;
 }
 </style>

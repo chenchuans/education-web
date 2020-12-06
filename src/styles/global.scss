@@ -1,8 +1,4 @@
-@import url('./transition.scss');
-@import url('./svgicon.scss');
-
 /* Global scss */
-
 body {
     height: 100%;
     margin: 0;
@@ -37,9 +33,9 @@ div:focus {
     outline: none;
 }
 
-.clearfix {
-    @include clearfix;
-}
+// .clearfix {
+//     @include clearfix;
+// }
 
 .app-container {
     padding: 20px;

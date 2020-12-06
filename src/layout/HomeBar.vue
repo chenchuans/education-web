@@ -66,6 +66,7 @@ export default class HomeBar extends Vue {
 </script>
 <style lang="scss" scoped>
 @import '@/styles/variables.scss';
+@import '@/styles/global.scss';
 .home-bar {
     width: 100%;
     height: 70px;
@@ -79,7 +80,7 @@ export default class HomeBar extends Vue {
         height: 100%;
         margin: 0 auto;
         display: flex;
-        justify-content: space-around;
+        justify-content: space-between;
         &-menu {
             display: flex;
             height: 70px;

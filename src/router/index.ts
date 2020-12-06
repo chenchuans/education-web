@@ -10,7 +10,7 @@ const routes: RouteRecordRaw[] = [
     {
         path: '/',
         redirect: '/home',
-        component: () => import('@/layout/HomeBar.vue'),
+        component: () => import('@/layout/Index.vue'),
         children: [
             {
                 path: 'home',
@@ -28,12 +28,12 @@ const routes: RouteRecordRaw[] = [
                 component: () => import('@/pages/UserCenter.vue'),
             },
             {
-                path: '/content-detail',
+                path: 'content-detail',
                 name: '课程详情',
                 component: () => import('@/pages/ContentDetail.vue'),
             },
             {
-                path: '/catalog-list',
+                path: 'catalog-list',
                 name: '目录列表',
                 component: () => import('@/pages/CatalogList.vue'),
             },
