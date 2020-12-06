@@ -5,9 +5,8 @@
                 <li :class="currentRoute === item.path ? 'select-item' : ''" v-for="(item, index) in routeList" :key="index" class="home-bar-wrapper-menu-item" @click="toRouteLink(item)">{{item.name}}</li>
             </ul>
             <div class="login">
-                <span class="login-user">用户名: {{userInfo.userName}}</span>
-                <ed-button class="login-button">{{loginStatus}}</ed-button>
-                <!-- <span class="login-button">{{loginStatus}}</span> -->
+                <span class="login-user" v-show="userInfo.userName">用户名: {{userInfo.userName}}</span>
+                <ed-button @click="handleLogin" class="login-button">{{loginStatus}}</ed-button>
             </div>
         </header>
     </div>
@@ -16,6 +15,7 @@
 <script lang="ts">
 import { Options, Vue } from "vue-class-component";
 import EdButton from '@/components/button/Index.vue';
+import { getUsername, removeUid, removeToken, removeUsername } from '@/libs/session';
 
 @Options({
     components: { EdButton },
@@ -27,9 +27,9 @@ import EdButton from '@/components/button/Index.vue';
                 {name: '个人中心', path: '/user-center'},
             ],
             currentRoute: this.$route.path || '/home',
-            loginStatus: '登录',
+            loginStatus: getUsername() ? '退出' : '登录',
             userInfo: {
-                userName: '沉船'
+                userName: getUsername()
             }
         }
     },
@@ -37,6 +37,15 @@ import EdButton from '@/components/button/Index.vue';
         toRouteLink(item) {
             this.$router.push(item.path);
             this.currentRoute = item.path;
+        },
+        handleLogin() {
+            // 登录或者退出登录
+            if (getUsername()) {
+                removeUid();
+                removeToken();
+                removeUsername();
+            }
+            this.$router.push('/login');
         }
     }
 })
@@ -81,19 +90,10 @@ $homeBarBorderColor: #eaeaea;
         }
         .login {
             &-user {
-                // font: 400 16px/70px '';
                 margin-right: 30px;
             }
             &-button {
                 margin: 20px 0;
-                // width: 90px;
-                // display: inline-block;
-                // height: 30px;
-                // line-height: 30px;
-                // border: 1px solid $fontColor;
-                // color: $fontColor;
-                // text-align: center;
-                // border-radius: 5px;
             }
         }
     }

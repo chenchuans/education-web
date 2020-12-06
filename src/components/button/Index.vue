@@ -1,5 +1,5 @@
 <template>
-    <span :style="{width: `${width}px`, height: `${height}px`, lineHeight: `${height}px`}" :class="[type, 'button']" @click="handleClick"><slot/></span>
+    <span :style="{width, height, lineHeight: height}" :class="[type, 'button']" @click="handleClick"><slot/></span>
 </template>
 
 <script lang="ts">
@@ -9,12 +9,12 @@ import { Options, Vue } from "vue-class-component";
     name: 'Button',
     props: {
         width: {
-            type: Number,
-            default: 90
+            type: String,
+            default: '90px'
         },
         height: {
-            type: Number,
-            default: 30
+            type: String,
+            default: '30px'
         },
         type: {
             type: String,
