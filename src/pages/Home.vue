@@ -1,16 +1,17 @@
 <template>
     <div class="home">
-        <HelloWorld msg="Welcome to Your Vue.js + TypeScript App" />
+        <!-- <home-bar/>
+        <router-view></router-view> -->
     </div>
 </template>
 
 <script lang="ts">
 import { Options, Vue } from "vue-class-component";
-import HelloWorld from "@/components/HelloWorld.vue"; // @ is an alias to /src
+import HomeBar from "@/layout/HomeBar.vue";
 
 @Options({
     components: {
-        HelloWorld
+        HomeBar
     }
 })
 export default class Home extends Vue {}

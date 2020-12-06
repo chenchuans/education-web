@@ -5,7 +5,7 @@ const routes: RouteRecordRaw[] = [
     {
         path: '/login',
         name: 'Login',
-        component: () => import('@/page/Login.vue'),
+        component: () => import('@/pages/Login.vue'),
     },
     {
         path: '/',
@@ -14,39 +14,35 @@ const routes: RouteRecordRaw[] = [
         children: [
             {
                 path: '/home',
-                name: 'Home',
-                component: () => import('@/page/Home.vue'),
-            },
-            {
-                path: '/content-list',
-                name: 'ContentList',
-                component: () => import('@/page/ContentList.vue'),
+                name: '首页',
+                component: () => import('@/pages/Home.vue'),
             },
             {
                 path: '/content-my',
-                name: 'ContentMy',
-                component: () => import('@/page/ContentMy.vue'),
+                name: '我的课程',
+                component: () => import('@/pages/ContentMy.vue'),
+            },
+            {
+                path: '/user-center',
+                name: '用户中心',
+                component: () => import('@/pages/UserCenter.vue'),
             },
             {
                 path: '/content-detail',
-                name: 'ContentDetail',
-                component: () => import('@/page/ContentDetail.vue'),
+                name: '课程详情',
+                component: () => import('@/pages/ContentDetail.vue'),
             },
             {
                 path: '/catalog-list',
-                name: 'CatalogList',
-                component: () => import('@/page/CatalogList.vue'),
+                name: '目录列表',
+                component: () => import('@/pages/CatalogList.vue'),
             },
         ],
     },
     {
         path: '/study',
-        name: 'Study',
-        component: () => import('@/page/study/Index.vue'),
-    },
-    {
-        path: '*',
-        redirect: '/404',
+        name: '我的学习',
+        component: () => import('@/pages/study/Index.vue'),
     },
 ];
 

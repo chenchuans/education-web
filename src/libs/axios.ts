@@ -1,7 +1,6 @@
 /**
- * ajax based axios
  * @author wangheng
- * @since  2020/11/27
+ * @since  2020/12/06
  */
 
 import axios, { AxiosInstance, AxiosRequestConfig, AxiosPromise, AxiosResponse } from 'axios';
