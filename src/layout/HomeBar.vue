@@ -13,7 +13,16 @@ import { Options, Vue } from "vue-class-component";
 
 @Options({
     components: {
-    }
+    },
+    data() {
+        return {
+            routeList: [
+                {name: '首页', route: '/'},
+                {name: '我的课程', route: ''},
+                {name: '个人中心', route: ''},
+            ]
+        }
+    },
 })
 export default class Home extends Vue {}
 </script>
