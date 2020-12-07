@@ -15,7 +15,7 @@ export const getCourseDetail = (data: any): AxiosPromise<ResponseType> => {
 };
 
 // 首页 -> 展示首页信息以及首页搜索
-export const getList = (data: any): AxiosPromise<ResponseType> => {
+export const getHomeList = (data: any): AxiosPromise<ResponseType> => {
     return ajax.request({
         url: baseUrl + '/font/home/list',
         data,
