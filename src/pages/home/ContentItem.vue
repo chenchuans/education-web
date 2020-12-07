@@ -1,6 +1,6 @@
 <template>
     <li class="item">
-        <img class="item-img" :src="`${item.courseCoverImageUrl}`" alt=""/>
+        <img class="item-img" @click="handleStudy(item.id)" :src="`${imageUrl}${item.courseCoverImageUrl}`" alt=""/>
         <section class="item-content">
             <div class="item-content-name">
                 <h3 class="item-content-name-title">{{item.courseName}}</h3>
@@ -13,7 +13,6 @@
                     <span class="item-content-bottom-price-sale">新人首单 ¥{{item.specialPrice}}</span>
                     <span class="item-content-bottom-price-origin">原价 ¥{{item.coursePrice}}</span>
                 </div>
-                <!-- 按钮 -->
                 <ed-button @click="handleStudy(item.id)" type="dark">立即学习</ed-button>
             </div>
         </section>
@@ -23,6 +22,7 @@
 <script lang="ts">
 import { Options, Vue } from "vue-class-component";
 import EdButton from '@/components/button/Index.vue';
+import url from '@/api/baseUrl.ts';
 
 @Options({
     name: 'ContentItem',
@@ -31,11 +31,20 @@ import EdButton from '@/components/button/Index.vue';
         item: {
             type: Object,
             required: true
+        },
+        isDetail: {
+            type: Boolean,
+            default: false
+        }
+    },
+    data() {
+        return {
+            imageUrl: url.imageUrl
         }
     },
     methods: {
         handleStudy(courseId) {
-            this.$router.push(`/?courseId=${courseId}`);
+            this.$router.push(`/content-detail?courseId=${courseId}`);
         }
     }
 })
@@ -51,11 +60,11 @@ export default class ContentItem extends Vue {};
     height: 240px;
     box-sizing: border-box;
     &-img {
-        background-color: red;
         width: 150px;
         height: 180px;
         border-radius: 8px;
         margin: 30px 0;
+        cursor: pointer;
     }
     &-content {
         width: 600px;

@@ -24,7 +24,7 @@ import { getUsername, removeUid, removeToken, removeUsername } from '@/libs/sess
             routeList: [
                 {name: '首页', path: '/home'},
                 {name: '我的课程', path: '/content-my'},
-                {name: '个人中心', path: '/user-center'},
+                {name: '我的订单', path: '/order-my'},
             ],
             currentRoute: this.$route.path || '/home',
             loginStatus: getUsername() ? '退出' : '登录',
