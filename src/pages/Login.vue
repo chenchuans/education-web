@@ -113,6 +113,7 @@ export default class Login extends Vue {};
 </script>
 <style lang="scss" scoped>
 @import '@/styles/variables.scss';
+@import '@/styles/global.scss';
 .login {
     background-image: url('./../assets/img/bag.png');
     background-size: 1920px 1080px;

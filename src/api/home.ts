@@ -24,7 +24,7 @@ export const getHomeList = (data: any): AxiosPromise<ResponseType> => {
 };
 
 // 我的页面 -> 课程信息
-export const getCourseInfo = (data: any): AxiosPromise<ResponseType> => {
+export const getMyCourseInfo = (data: any): AxiosPromise<ResponseType> => {
     return ajax.request({
         url: baseUrl + '/font/main/getCourseInfo',
         data,
