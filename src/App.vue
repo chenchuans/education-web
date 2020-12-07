@@ -1,10 +1,8 @@
 <template>
-    <div id="app">
-       <router-view/>
-    </div>
+    <router-view/>
 </template>
 
-<style lang="scss" scoped>
+<style lang="scss">
 @import '@/styles/variables.scss';
 @import '@/styles/global.scss';
 .page {
