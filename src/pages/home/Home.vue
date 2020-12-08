@@ -53,10 +53,12 @@ import EdButton from '@/components/button/Index.vue';
         handleSearch() {
             this.page = 1;
             this.getList(true);
+            this.list = [];
         },
         handleEnter(e) {
             this.page = 1;
             this.getList(true);
+            this.list = [];
         },
         handleMore() {
             ++this.page;
@@ -66,7 +68,7 @@ import EdButton from '@/components/button/Index.vue';
 })
 export default class Home extends Vue {};
 </script>
-<style lang="scss" scoped>
+<style lang="scss">
 @import '@/styles/variables.scss';
 @import '@/styles/global.scss';
 .home {

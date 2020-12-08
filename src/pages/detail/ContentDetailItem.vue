@@ -4,10 +4,10 @@
         <section class="item-content">
             <div class="item-content-name">
                 <h3 class="item-content-name-title">{{item.courseName}}</h3>
-                <p  class="item-content-name-tips">13章 | 324581人已经学习</p>
+                <p  class="item-content-name-tips">{{item.catalogLength}}章</p>
             </div>
-            <p class="item-content-teacher">{{item.teacherName}} {{item.teacherDesc}}</p>
-            <div class="item-content-desc">{{item.descContent}}</div>
+            <p class="item-content-teacher">{{item.teacherName}}</p>
+            <div class="item-content-desc">{{item.teacherDesc}}</div>
             <div class="item-content-bottom">
                 <div class="item-content-bottom-price">
                     <ed-button @click="handleStudy(item.id)" type="dark">¥{{item.specialPrice}}购买</ed-button>
