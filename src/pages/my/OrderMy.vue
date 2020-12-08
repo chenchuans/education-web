@@ -1,6 +1,29 @@
 <template>
     <div class="order">
         <h2 class="order-title">我的订单</h2>
+        <ul class="order-list">
+            <nav class="order-list-nav">
+                <span>商品名称</span>
+                <span>支付方式</span>
+                <span>状态</span>
+                <span>实付金额</span>
+            </nav>
+            <li v-for="(item, index) in orderList" :key="index" class="order-list-item">
+                <header class="order-list-item-header">
+                    <span class="order-list-item-header-num">订单编号：10109130880259076253</span>
+                    <span class="order-list-item-header-time">2019-05-28</span>
+                </header>
+                <section class="order-list-item-content">
+                    <div class="order-list-item-content-con" @click="handleDetail(item.id)">
+                        <img src="" class="order-list-item-content-con-img" alt=""/>
+                        <p class="order-list-item-content-con-name">玩转Webpack</p>
+                    </div>
+                    <span class="order-list-item-content-text">微信</span>
+                    <span class="order-list-item-content-text">已完成</span>
+                    <span class="order-list-item-content-price">￥ 55.00</span>
+                </section>
+            </li>
+        </ul>
     </div>
 </template>
 
@@ -28,6 +51,9 @@ import EdButton from '@/components/button/Index.vue';
                     // this.orderList = res.data.;
                 }
             });
+        },
+        handleDetail(courseId) {
+            this.$router.push(`/content-detail?courseId=${courseId}`);
         }
     }
 })
@@ -37,13 +63,87 @@ export default class OrderMy extends Vue {};
 @import '@/styles/variables.scss';
 @import '@/styles/global.scss';
 .order {
-    width: 800px;
+    width: 1000px;
     margin: 0 auto;
-    margin-top: 130px;
+    margin-top: 110px;
     box-sizing: border-box;
     padding: 20px;
     border-radius: 10px;
     box-shadow: 0 0 14px 2px $shadowColor;
     min-height: 300px;
+    &-title {
+        margin-bottom: 20px;
+    }
+    &-list {
+        &-nav {
+            font: 400 14px/24px '';
+            padding: 0 20px;
+            display: flex;
+            justify-content: space-between;
+            color: $tipsColor;
+            margin-bottom: 10px;
+            span {
+            }
+        }
+        &-item {
+            margin-bottom: 20px;
+            width: 100%;
+            height: 180px;
+            border: 2px solid #f6f7fb;
+            border-radius: 5px;
+            &-header {
+                height: 50px;
+                padding: 0 20px;
+                font: 400 14px/50px '';
+                color: #888;
+                background: #f6f7fb;
+                &-num {
+                    margin-right: 20px;
+                }
+                &-time {
+
+                }
+            }
+            &-content {
+                padding: 20px;
+                box-sizing: border-box;
+                width: 100%;
+                display: flex;
+                &-con {
+                    cursor: pointer;
+                    display: flex;
+                    &-img {
+                        height: 80px;
+                        width: 80px;
+                        border-radius: 5px;
+                        background: red;
+                        margin-right: 10px;
+                    }
+                    &-name {
+                        width: 200px;
+                        box-sizing: border-box;
+                        padding-right: 20px;
+                        font: 16px/24px '';
+                        color: $fontColor;
+                    }
+                }
+                &-text {
+                    font: 16px/80px '';
+                }
+                &-text:nth-of-type(1) {
+                    width: 300px;
+                }
+                &-text:nth-of-type(2) {
+                    width: 200px;
+                }
+                &-price {
+                    width: 150px;
+                    text-align: right;
+                    font: 500 16px/80px '';
+                    color: $orangeFontColor;
+                }
+            }
+        }
+    }
 }
 </style>
