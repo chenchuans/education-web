@@ -54,7 +54,7 @@ import { formatterTime } from '@/libs/utils';
             });
         },
         handleDetail(courseId) {
-            this.$router.push(`/content-detail?courseId=${courseId}`);
+            this.$router.push(`/catalog-list?courseId=${courseId}`);
         },
         handleTime(time) {
             return formatterTime(time);
@@ -120,7 +120,6 @@ export default class OrderMy extends Vue {};
                         height: 80px;
                         width: 80px;
                         border-radius: 5px;
-                        background: red;
                         margin-right: 10px;
                     }
                     &-name {

@@ -32,6 +32,11 @@ const routes: RouteRecordRaw[] = [
                 name: '课程详情',
                 component: () => import('@/pages/detail/ContentDetail.vue'),
             },
+            {
+                path: 'catalog-list',
+                name: '目录列表',
+                component: () => import('@/pages/study/CatalogList.vue'),
+            },
         ],
     },
     {
@@ -47,7 +52,7 @@ const router = createRouter({
 });
 
 const isNeedLogin = (path: string) => {
-    const pathList: string[] = ['/course-my', '/order-my'];
+    const pathList: string[] = ['/course-my', '/order-my', 'catalog-list'];
     const uid: string = getUid();
     const token: string = getToken();
     if ((!uid || !token) && pathList.includes(path)) {

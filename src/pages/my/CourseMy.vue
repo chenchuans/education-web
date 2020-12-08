@@ -42,7 +42,7 @@ import EdButton from '@/components/button/Index.vue';
             });
         },
         handleStudy(courseId) {
-            // this.$router.push(`/?courseId=${courseId}`);
+            this.$router.push(`/catalog-list?courseId=${courseId}`);
         }
     }
 })
