@@ -56,12 +56,20 @@ const router = createRouter({
     routes,
 });
 
+const isNeedLogin = (path: string) => {
+    const pathList: string[] = ['/course-my', '/order-my'];
+    const uid: string = getUid();
+    const token: string = getToken();
+    if ((!uid || !token) && pathList.includes(path)) {
+        return true;
+    }
+    return false;
+};
+
 router.beforeEach((to, from, next) => {
-    // const uid: string = getUid();
-    // const token: string = getToken();
-    // if ((!uid || !token) && to.path !== '/login') {
-    //     return next({ path: '/login' });
-    // }
+    if (isNeedLogin(to.path)) {
+        return next({ path: '/login' });
+    }
     return next();
 });
 
