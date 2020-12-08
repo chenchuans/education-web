@@ -4,13 +4,13 @@
         <ul class="course-list">
             <li class="course-list-item" v-for="(item, index) in courseList" :key="index">
                 <aside class="course-list-item-left">
-                    <img class="course-list-item-left-img" src="" alt=""/>
+                    <img class="course-list-item-left-img" :src="`${imageUrl}${item.courseCoverImageUrl}`" alt=""/>
                     <div class="course-list-item-left-content">
-                        <h3 class="course-list-item-left-content-title">重学前端</h3>
-                        <p class="course-list-item-left-content-p">共 59 讲 | 已学 10 讲 | 学完 20%</p>
+                        <h3 class="course-list-item-left-content-title">{{item.courseName}}</h3>
+                        <p class="course-list-item-left-content-p">学完 {{item.rateOfLearningPercentage}}%</p>
                     </div>
                 </aside>
-                <ed-button type="dark" class="course-list-item-button">开始学习</ed-button>
+                <ed-button type="dark" @click="handleStudy(item.courseId)" class="course-list-item-button">开始学习</ed-button>
             </li>
         </ul>
     </div>
@@ -27,7 +27,7 @@ import EdButton from '@/components/button/Index.vue';
     data() {
         return {
             imageUrl: url.imageUrl,
-            courseList: [{}]
+            courseList: []
         }
     },
     created() {
@@ -37,9 +37,12 @@ import EdButton from '@/components/button/Index.vue';
         getInfo() {
             getMyCourseInfo({}).then((res: any) => {
                 if (res.code === 200) {
-                    // this.courseList = res.data.;
+                    this.courseList = res.data.infoList;
                 }
             });
+        },
+        handleStudy(courseId) {
+            // this.$router.push(`/?courseId=${courseId}`);
         }
     }
 })
@@ -76,7 +79,6 @@ export default class CourseMy extends Vue {};
                     width: 70px;
                     height: 80px;
                     border-radius: 5px;
-                    background-color: red;
                     margin-right: 16px;
                     cursor: pointer;
                 }

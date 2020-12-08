@@ -28,26 +28,16 @@ const routes: RouteRecordRaw[] = [
                 component: () => import('@/pages/my/OrderMy.vue'),
             },
             {
-                path: 'user-center',
-                name: '用户中心',
-                component: () => import('@/pages/UserCenter.vue'),
-            },
-            {
                 path: 'content-detail',
                 name: '课程详情',
                 component: () => import('@/pages/detail/ContentDetail.vue'),
-            },
-            {
-                path: 'catalog-list',
-                name: '目录列表',
-                component: () => import('@/pages/CatalogList.vue'),
             },
         ],
     },
     {
         path: '/study',
         name: '我的学习',
-        component: () => import('@/pages/study/Index.vue'),
+        component: () => import('@/pages/study/Study.vue'),
     },
 ];
 

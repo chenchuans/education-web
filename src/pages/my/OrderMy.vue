@@ -10,17 +10,17 @@
             </nav>
             <li v-for="(item, index) in orderList" :key="index" class="order-list-item">
                 <header class="order-list-item-header">
-                    <span class="order-list-item-header-num">订单编号：10109130880259076253</span>
-                    <span class="order-list-item-header-time">2019-05-28</span>
+                    <span class="order-list-item-header-num">订单编号：{{item.orderId}}</span>
+                    <span class="order-list-item-header-time">{{handleTime(item.orderTime)}}</span>
                 </header>
                 <section class="order-list-item-content">
                     <div class="order-list-item-content-con" @click="handleDetail(item.id)">
-                        <img src="" class="order-list-item-content-con-img" alt=""/>
-                        <p class="order-list-item-content-con-name">玩转Webpack</p>
+                        <img :src="`${imageUrl}${item.courseCoverImageUrl}`" class="order-list-item-content-con-img" alt=""/>
+                        <p class="order-list-item-content-con-name">{{item.courseName}}</p>
                     </div>
-                    <span class="order-list-item-content-text">微信</span>
-                    <span class="order-list-item-content-text">已完成</span>
-                    <span class="order-list-item-content-price">￥ 55.00</span>
+                    <span class="order-list-item-content-text">{{item.payType}}</span>
+                    <span class="order-list-item-content-text">{{item.isPay ? '已完成' : '未完成'}}</span>
+                    <span class="order-list-item-content-price">￥{{item.orderPrice}}</span>
                 </section>
             </li>
         </ul>
@@ -32,28 +32,32 @@ import { Options, Vue } from "vue-class-component";
 import { getMyOrderInfo } from '@/api';
 import url from '@/api/baseUrl.ts';
 import EdButton from '@/components/button/Index.vue';
+import { formatterTime } from '@/libs/utils';
 
 @Options({
     components: { EdButton },
     data() {
         return {
             imageUrl: url.imageUrl,
-            orderList: [{}]
+            orderList: []
         }
     },
     created() {
-        // this.getInfo();
+        this.getInfo();
     },
     methods: {
         getInfo() {
             getMyOrderInfo({}).then((res: any) => {
                 if (res.code === 200) {
-                    // this.orderList = res.data.;
+                    this.orderList = res.data.orderInfoList;
                 }
             });
         },
         handleDetail(courseId) {
             this.$router.push(`/content-detail?courseId=${courseId}`);
+        },
+        handleTime(time) {
+            return formatterTime(time);
         }
     }
 })
