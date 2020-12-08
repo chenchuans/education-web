@@ -1,17 +1,17 @@
-export const getUid = () => window.localStorage.uid;
+export const getUid = () => window.localStorage.webUid;
 export const setUid = (uid: string | number) => {
-    window.localStorage.uid = uid;
+    window.localStorage.webUid = uid;
 };
-export const removeUid = () => window.localStorage.removeItem('uid');
+export const removeUid = () => window.localStorage.removeItem('webUid');
 
-export const getToken = () => window.localStorage.token;
+export const getToken = () => window.localStorage.webToken;
 export const setToken = (token: string) => {
-    window.localStorage.token = token;
+    window.localStorage.webToken = token;
 };
-export const removeToken = () => window.localStorage.removeItem('token');
+export const removeToken = () => window.localStorage.removeItem('webToken');
 
-export const getUsername = () => window.localStorage.userName;
+export const getUsername = () => window.localStorage.webUserName;
 export const setUsername = (userName: string) => {
-    window.localStorage.userName = userName;
+    window.localStorage.webUserName = userName;
 };
-export const removeUsername = () => window.localStorage.removeItem('userName');
+export const removeUsername = () => window.localStorage.removeItem('webUserName');

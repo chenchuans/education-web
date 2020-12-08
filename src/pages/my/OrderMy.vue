@@ -54,7 +54,7 @@ import { formatterTime } from '@/libs/utils';
             });
         },
         handleDetail(courseId) {
-            this.$router.push(`/catalog-list?courseId=${courseId}`);
+            // this.$router.push(`/catalog-list?courseId=${courseId}`);
         },
         handleTime(time) {
             return formatterTime(time);
