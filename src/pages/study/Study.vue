@@ -6,42 +6,64 @@
         </h2>
         <section class="study-content">
             <ul class="study-content-list">
-                <li class="study-content-list-item"></li>
+                <li class="study-content-list-item" v-for="(item, index) in studyList" :key="index">
+                    <div v-if="item.courseContentType === 'TITLE'" class="study-content-list-item-title">{{item.content}}</div>
+                    <div v-if="item.courseContentType === 'IMAGE'" class="study-content-list-item-image">
+                        <img class="study-content-list-item-image-img" :src="`${imageUrl}${item.content}`" alt=""/>
+                    </div>
+                    <div v-if="item.courseContentType === 'TEXT'" class="study-content-list-item-text"> {{item.content}}</div>
+                    <answer v-if="item.courseContentType === 'ANSWER'" :params="item" class="study-content-list-item-answer"/>
+                </li>
             </ul>
             <span :style="{right: isShow ? '300px' : '150px'}" @click="isShow = !isShow" class="study-content-close">关闭</span>
-            <div :style="{left: isShow ? '0px' : '150px'}" class="study-content-button">{{buttonText}}</div>
-            <aside-catalog v-show="isShow" class="study-content-aside"/>
+            <div @click="handleMore" :style="{left: isShow ? '0px' : '150px'}" class="study-content-button">{{buttonText}}</div>
+            <aside-catalog :studyList="studyList" v-show="isShow" class="study-content-aside"/>
         </section>
     </div>
 </template>
 
 <script lang="ts">
 import { Options, Vue } from "vue-class-component";
-import Answer from './components/Answer.vue';
-import Content from './components/Content.vue';
-import Title from './components/Title.vue';
-import Image from './components/Image.vue';
-import AsideCatalog from './components/AsideCatalog.vue';
-// import { getCourseDetail } from '@/api';
+import Answer from './Answer.vue';
+import AsideCatalog from './AsideCatalog.vue';
+import { getAlreadyInfo, getContentItem } from '@/api';
 import EdButton from '@/components/button/Index.vue';
+import url from '@/api/baseUrl.ts';
 
 @Options({
-    components: { EdButton, Answer, Content, Title, Image, AsideCatalog },
+    components: { EdButton, Answer, AsideCatalog },
     data () {
         return {
             buttonText: '继续学习',
+            imageUrl: url.imageUrl,
             isShow: true,
             index: this.$route.query.index,
-            catalogName: this.$route.query.catalogName
+            catalogName: this.$route.query.catalogName,
+            studyList: []
         };
     },
     created() {
-        // this.getInfo();
+        this.getInfo();
     },
     methods: {
         getInfo() {
-
+            const { catalogId, courseId } = this.$route.query;
+            getAlreadyInfo({catalogId, courseId}).then((res: any) => {
+                if (res.code === 200) {
+                    this.studyList = res.data.contentInfoList;
+                }
+            });
         },
+        handleMore() {
+            const { catalogId, courseId } = this.$route.query;
+            const len = this.studyList.length;
+            const { chapterId, contentId } = this.studyList[len - 1];
+            getContentItem({catalogId, courseId, chapterId, contentId}).then((res: any) => {
+                if (res.code === 200) {
+                    this.studyList.push(res.data);
+                }
+            });
+        }
     }
 })
 export default class Study extends Vue {};
@@ -86,7 +108,36 @@ export default class Study extends Vue {};
             padding: 80px 0;
             transition: all .5s;
             &-item {
+                font: 400 20px/2 '';
+                letter-spacing: 2;
+                padding: 20px;
+                &-title {
+                    text-align: center;
+                }
 
+                &-image {
+                    width: 100%;
+                    height: 100%;
+                    margin: 0 auto;
+                }
+                &-text {
+                    font-size: 18px;
+                    color: $formColor;
+                    position: relative;
+                }
+                 &-text::before {
+                    content: '';
+                    width: 2px;
+                    height: 100%;
+                    position: absolute;
+                    left: -20px;
+                    top: 0;
+                    display: inline-block;
+                    background: $orangeFontColor;
+                }
+                &-answer {
+
+                }
             }
         }
         &-close {

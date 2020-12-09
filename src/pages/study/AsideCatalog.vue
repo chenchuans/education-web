@@ -9,8 +9,8 @@
                     {{index + 1}}-{{i + 1}}. {{it.contentText}}</p>
             </li>
         </ul>
-        <h5 class="catalog-sub_title">资料下载</h5>
-        <div class="catalog-card">
+        <h5 class="catalog-sub_title" v-if="courseInfo.materialsName">资料下载</h5>
+        <div class="catalog-card" v-if="courseInfo.materialsName">
             <h3 class="catalog-card-title">{{courseInfo.materialsName}}</h3>
             <span class="catalog-card-click">点击下载</span>
         </div>
@@ -20,17 +20,35 @@
 import { Options, Vue } from "vue-class-component";
 import { getCatalogDetail } from '@/api';
 import url from '@/api/baseUrl.ts';
-
+// chapterId contentId
 @Options({
-    components: {},
+    props: {
+        studyList: {
+            type: Array,
+            default: () => []
+        }
+    },
     data () {
         return {
             chapterList: [],
             courseInfo: {},
             rateOLearn: 0,
+            chapterIdList: [],
+            contentIdList: [],
             imageUrl: url.imageUrl,
             courseName: this.$route.query.courseName
         };
+    },
+    watch: {
+        studyList(value) {
+
+            // console.log(11, new Proxy(value));
+            // value[1].forEach(({chapterId, contentId}) => {
+            //     this.chapterIdList.push(chapterId);
+            //     this.contentIdList.push(contentId);
+            // });
+            // console.log(111, this.chapterIdList, this.contentIdList);
+        }
     },
     created() {
         this.getInfo();
@@ -93,7 +111,7 @@ export default class Catalog extends Vue {};
         height: 80px;
         padding: 10px;
         border-radius: 5px;
-        background-color: $orangeBackground;
+        background-color: $orangeCardColor;
         position: relative;
         cursor: pointer;
         &-title {
