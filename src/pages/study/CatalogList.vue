@@ -5,7 +5,7 @@
             <h4>{{courseInfo.courseName}}</h4>
         </h2>
         <ul class="catalog-list">
-            <li :class="['catalog-list-item', item.isHaveAuth ? '' : 'catalog-list-item_min']" v-for="(item, index) in catalogList" :key="index" @click="handleStudy(item)">
+            <li :class="['catalog-list-item', item.isHaveAuth ? '' : 'catalog-list-item_min']" v-for="(item, index) in catalogList" :key="index" @click="handleStudy(index, item)">
                 <h3 class="catalog-list-item-title">第{{index + 1}}章 {{item.catalogName}}</h3>
                 <!-- <p v-if="item.isHaveAuth" class="catalog-list-item-time">2020年11月2日</p> -->
                 <footer v-if="item.isHaveAuth" class="catalog-list-item-footer">
@@ -45,9 +45,10 @@ import url from '@/api/baseUrl.ts';
                 }
             });
         },
-        handleStudy({courseId, catalogId, isHaveAuth}) {
+        handleStudy(index, {courseId, catalogId, isHaveAuth, catalogName}) {
             if (isHaveAuth) {
-                this.$router.push(`/study?courseId=${courseId}&catalogId=${catalogId}`);
+                const { courseName } = this.courseInfo;
+                this.$router.push(`/study?courseId=${courseId}&catalogId=${catalogId}&courseName=${courseName}&catalogName=${catalogName}&index=${index + 1}`);
             }
         }
     }
