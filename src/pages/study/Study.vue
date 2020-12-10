@@ -12,8 +12,9 @@
                         <img class="study-content-list-item-image-img" :src="`${imageUrl}${item.content}`" alt=""/>
                     </div>
                     <div :id="`chapter${item.chapterId}`" v-if="item.courseContentType === 'TEXT'" class="study-content-list-item-text"> {{item.content}}</div>
-                    <answer v-if="item.courseContentType === 'ANSWER'" :params="item" class="study-content-list-item-answer"/>
+                    <answer v-if="item.courseContentType === 'ANSWER'" :answerItem="item" class="study-content-list-item-answer"/>
                 </li>
+                <answer/>
             </ul>
             <span :style="{right: isShow ? '300px' : '150px'}" @click="isShow = !isShow" class="study-content-close">关闭</span>
             <div @click="handleMore" :style="{left: isShow ? '0px' : '150px'}" class="study-content-button">{{buttonText}}</div>
@@ -125,7 +126,7 @@ export default class Study extends Vue {};
                     color: $formColor;
                     position: relative;
                 }
-                 &-text::before {
+                &-text::before {
                     content: '';
                     width: 2px;
                     height: 100%;

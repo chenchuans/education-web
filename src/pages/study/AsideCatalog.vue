@@ -5,9 +5,7 @@
         <ul class="catalog-list">
             <li class="catalog-list-item" v-for="(item, index) in chapterList" :key="index">
                 <h6 :class="['catalog-list-item-title', !chapterIdList.includes(item.chapterId) ? 'no-click' : '']" @click="handleChapter(item)">{{index + 1}}. {{item.chapterName}}</h6>
-                <p v-for="(it, i) in item.contentTitleList" @click="handleContent(it)" :class="['catalog-list-item-p', !contentIdList.includes(it.contentId) ? 'no-click' : '']">
-                    <a href="">{{index + 1}}-{{i + 1}}. {{it.contentText}}</a>
-                    </p>
+                <p v-for="(it, i) in item.contentTitleList" @click="handleContent(it)" :class="['catalog-list-item-p', !contentIdList.includes(it.contentId) ? 'no-click' : '']">{{index + 1}}-{{i + 1}}. {{it.contentText}}</p>
             </li>
         </ul>
         <h5 class="catalog-sub_title" v-if="courseInfo.materialsName">资料下载</h5>
@@ -70,18 +68,21 @@ import url from '@/api/baseUrl.ts';
                 return;
             }
             let el = document.getElementById(`chapter${item.chapterId}`);
-            this.$nextTick(() => {
-                window.scrollTo({behavior: 'smooth', top: el.offsetTop});
-            });
+            console.log(111, el);
+            // this.$nextTick(() => {
+                el.scrollTop = 50;
+                // window.scrollTo({behavior: 'smooth', top: el.offsetTop});
+            // });
         },
         handleContent(item) {
             if (!this.contentIdList.includes(item.contentId)) {
                 return;
             }
             let el = document.getElementById(`content${item.contentId}`);
-            this.$nextTick(() => {
-                window.scrollTo({behavior: 'smooth', top: el.offsetTop});
-            });
+            // this.$nextTick(() => {
+                el.scrollTop = 50;
+                // window.scrollTo({behavior: 'smooth', top: el.offsetTop});
+            // });
         },
         handleDownFile() {
             // 点击下载文件

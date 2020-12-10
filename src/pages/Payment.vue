@@ -2,7 +2,7 @@
     <div class="payment">
         <h2 class="payment-title">支付金额<span>￥44.22</span>,请使用微信扫描下面二维码完成</h2>
         <section class="payment-section">
-            <img class="payment-section-img" src="" alt=""/>
+            <img class="payment-section-img" src="./../assets/img/weixin.jpeg" alt=""/>
             <ul class="payment-section-info">
                 <li v-for="(item, index) in infoList" :key="index" class="payment-section-info-p">
                     <span class="payment-section-info-p-key">{{item.key}}</span>
@@ -47,7 +47,7 @@ export default class Payment extends Vue {};
 @import '@/styles/global.scss';
 .payment {
     width: 850px;
-    height: 450px;
+    height: 550px;
     margin: 100px auto;
     background: $orangeBackground;
     box-sizing: border-box;
@@ -68,8 +68,8 @@ export default class Payment extends Vue {};
         justify-content: space-between;
         &-img {
             width: 300px;
-            height: 300px;
-            background-color: red;
+            height: 400px;
+            // background: url('./../assets/img/weixin.jpeg') 100% 100%; 
         }
         &-info {
             box-sizing: border-box;
