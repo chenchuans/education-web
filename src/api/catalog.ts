@@ -44,7 +44,7 @@ export const getContentItem = (data: any): AxiosPromise<ResponseType> => {
 // 学习模块 -> 学习页面-> 答题
 export const answer = (data: any): AxiosPromise<ResponseType> => {
     return ajax.request({
-        url: baseUrl + '/learn/content/',
+        url: baseUrl + '/learn/content/answerQuestion',
         data,
         method: 'post',
     });

@@ -17,7 +17,7 @@
             <p v-show="isCodeError" class="login-card-error">{{errorText}}</p>
             <footer class="login-card-footer">
                 <ul class="login-card-footer-list">
-                    <li class="login-card-footer-list-item"></li>
+                    <img src="./../assets/img/wx-icon.png" class="login-card-footer-list-item"/>
                 </ul>
                 <p class="login-card-footer-tips">登录即表示同意 
                     <span>《用户协议》</span> 和
@@ -196,7 +196,6 @@ export default class Login extends Vue {};
                     height: 40px;
                     width: 40px;
                     border-radius: 50%;
-                    background-color: #f6f7fb;
                 }
             }
             &-tips {

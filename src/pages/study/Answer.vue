@@ -1,23 +1,23 @@
 <template>
     <div class="answer">
-        <h3 class="answer-title">切片器的使用掌握了吗？我们来做个测试：请你使用切片器查看，广东的古典抱枕的销量是多少？</h3>
+        <h3 class="answer-title">{{answerItem.content}}</h3>
         <section class="answer-card">
-            <p class="answer-card-name">输入销量（数字） ：</p>
+            <p class="answer-card-name">输入答案 ：</p>
             <div class="answer-card-content">
-                <input type="text" class="answer-card-content-input"/>
-                <span @click="submitAnswer" :class="['answer-card-content-button', submitText === '重新作答' ?'no-click' : '']">{{submitText}}</span>
+                <input v-model="answerValue" type="text" class="answer-card-content-input"/>
+                <span @click="submitAnswer" :class="['answer-card-content-button', submitStatus ?'no-click' : '']">提交答案</span>
             </div>
-            <p v-if="submitText === '重新作答'" :class="['answer-card-tips', isErrorText ? 'error-text' : '']">输入销量错误！建议你根据课程内容，再同步操作一遍，相信你下一次一定能做对的</p>
-            <div v-if="submitText === '重新作答'" class="answer-card-bottom">
+            <p v-if="submitStatus" :class="['answer-card-tips', isErrorText ? 'error-text' : '']">{{answerTip}}</p>
+            <div v-if="submitStatus" class="answer-card-bottom">
                 <ed-button class="answer-card-bottom-button" height="30px" @click="resetInput" type="dark">重新作答</ed-button>
-                <span class="answer-card-bottom-span" @click="breakQuestion">点击跳过此题</span>
+                <!-- <span class="answer-card-bottom-span" @click="breakQuestion">点击跳过此题</span> -->
             </div>
         </section>
     </div>
 </template>
 <script lang="ts">
 import { Options, Vue } from "vue-class-component";
-import { getCatalogDetail } from '@/api';
+import { answer } from '@/api';
 import url from '@/api/baseUrl.ts';
 import EdButton from '@/components/button/Index.vue';
 @Options({
@@ -31,29 +31,32 @@ import EdButton from '@/components/button/Index.vue';
     data () {
         return {
             answerValue: '',
-            submitText: '提交答案',
+            answerTip: '',
+            submitStatus: false,
             isErrorText: false
         };
     },
-    created() {
-        this.getInfo();
-    },
     methods: {
-        getInfo() {
-            
-        },
         submitAnswer() {
-            // 提交答案
-            this.submitText = '重新作答';
+            const { contentId, chapterId } = this.answerItem;
+            const { courseId, catalogId } = this.$route.query;
+            const { answerValue } = this;
+            answer({answerValue, catalogId, chapterId, contentId, courseId}).then((res: any) => {
+                if (res.code === 200) {
+                    this.isErrorText = !res.data.isTrueAnswer;
+                    this.submitStatus = true;
+                    this.answerTip = res.data.answerTip;
+                }
+            });
         },
         resetInput() {
             // 重新作答
             this.answerValue = '';
-            this.submitText = '提交答案';
-        },
-        breakQuestion() {
-            // 跳过此题
+            this.submitStatus = false;
         }
+        // breakQuestion() {
+            // 跳过此题
+        // }
     }
 })
 export default class Answer extends Vue {};

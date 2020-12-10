@@ -4,7 +4,10 @@
         <h5 class="catalog-sub_title">目录引导 <span>(已学习{{rateOLearn}}%)</span></h5>
         <ul class="catalog-list">
             <li class="catalog-list-item" v-for="(item, index) in chapterList" :key="index">
-                <h6 :class="['catalog-list-item-title', !chapterIdList.includes(item.chapterId) ? 'no-click' : '']" @click="handleChapter(item)">{{index + 1}}. {{item.chapterName}}</h6>
+                <h6 :class="['catalog-list-item-title', !chapterIdList.includes(item.chapterId) ? 'no-click' : '']" @click="handleChapter(item)">
+                    <!-- <a :href="`#chapter${item.chapterId}`"></a> -->
+                        {{index + 1}}. {{item.chapterName}}
+                    </h6>
                 <p v-for="(it, i) in item.contentTitleList" @click="handleContent(it)" :class="['catalog-list-item-p', !contentIdList.includes(it.contentId) ? 'no-click' : '']">{{index + 1}}-{{i + 1}}. {{it.contentText}}</p>
             </li>
         </ul>
@@ -45,7 +48,7 @@ import url from '@/api/baseUrl.ts';
                 chapterIdList.push(chapterId);
                 contentIdList.push(contentId);
             });
-            this.chapterIdList = Array.from(chapterIdList);
+            this.chapterIdList = Array.from(new Set(chapterIdList));
             this.contentIdList = Array.from(contentIdList);
         }
     },
@@ -69,8 +72,11 @@ import url from '@/api/baseUrl.ts';
             }
             let el = document.getElementById(`chapter${item.chapterId}`);
             console.log(111, el);
+            
+            setTimeout(() => {
+                // document.scrollTop = 500;
+            }, 100);
             // this.$nextTick(() => {
-                el.scrollTop = 50;
                 // window.scrollTo({behavior: 'smooth', top: el.offsetTop});
             // });
         },

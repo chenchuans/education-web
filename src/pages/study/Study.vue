@@ -7,6 +7,10 @@
         <section class="study-content">
             <ul class="study-content-list">
                 <li class="study-content-list-item" v-for="(item, index) in studyList" :key="index">
+                    <div :id="`chapter${item.chapterId}`" v-if="item.courseContentType === 'CHAPTER'" class="study-content-list-item-sub_title">
+                        <!-- <a :name="`chapter${item.chapterId}`"></a> -->
+                        {{item.content}}
+                    </div>
                     <div :id="`content${item.contentId}`" v-if="item.courseContentType === 'TITLE'" class="study-content-list-item-title">{{item.content}}</div>
                     <div v-if="item.courseContentType === 'IMAGE'" class="study-content-list-item-image">
                         <img class="study-content-list-item-image-img" :src="`${imageUrl}${item.content}`" alt=""/>
@@ -14,9 +18,11 @@
                     <div :id="`chapter${item.chapterId}`" v-if="item.courseContentType === 'TEXT'" class="study-content-list-item-text"> {{item.content}}</div>
                     <answer v-if="item.courseContentType === 'ANSWER'" :answerItem="item" class="study-content-list-item-answer"/>
                 </li>
-                <answer/>
             </ul>
-            <span :style="{right: isShow ? '300px' : '150px'}" @click="isShow = !isShow" class="study-content-close">关闭</span>
+            <span :style="{right: isShow ? '300px' : '150px'}" @click="isShow = !isShow" class="study-content-close">
+                <img v-if="isShow" src="./../../assets/img/right.png" alt=""/>
+                <img v-else src="./../../assets/img/left.png" alt=""/>
+            </span>
             <div @click="handleMore" :style="{left: isShow ? '0px' : '150px'}" class="study-content-button">{{buttonText}}</div>
             <aside-catalog :studyList="studyList" v-show="isShow" class="study-content-aside"/>
         </section>
@@ -56,12 +62,20 @@ import url from '@/api/baseUrl.ts';
             });
         },
         handleMore() {
+            if (this.buttonText === '完成课程') {
+                this.$router.go(-1);
+                return;
+            }
             const { catalogId, courseId } = this.$route.query;
             const len = this.studyList.length;
             const { chapterId, contentId } = this.studyList[len - 1];
             getContentItem({catalogId, courseId, chapterId, contentId}).then((res: any) => {
                 if (res.code === 200) {
-                    this.studyList.push(res.data);
+                    if (res.data.contentInfoList.length === 0) {
+                        this.buttonText = '完成课程';
+                    } else {
+                        this.studyList = [...this.studyList, ...res.data.contentInfoList];
+                    }
                 }
             });
         }
@@ -112,6 +126,10 @@ export default class Study extends Vue {};
                 font: 400 20px/2 '';
                 letter-spacing: 2;
                 padding: 20px;
+                &-sub_title {
+                    font: 500 30px/2 '';
+                    color: $orangeFontColor;
+                }
                 &-title {
                     text-align: center;
                 }
@@ -136,9 +154,6 @@ export default class Study extends Vue {};
                     display: inline-block;
                     background: $orangeFontColor;
                 }
-                &-answer {
-
-                }
             }
         }
         &-close {
@@ -148,7 +163,14 @@ export default class Study extends Vue {};
             top: 48%;
             background: $orangeBackground;
             z-index: 2;
+            display: flex;
+            justify-content: center;
+            align-items: center;
             cursor: pointer;
+            img {
+                width: 30px;
+                height: 30px;
+            }
         }
         &-button {
             width: calc(100% - 300px);
