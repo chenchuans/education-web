@@ -44,6 +44,11 @@ const routes: RouteRecordRaw[] = [
         name: '我的学习',
         component: () => import('@/pages/study/Study.vue'),
     },
+    {
+        path: '/payment',
+        name: '微信支付',
+        component: () => import('@/pages/Payment.vue'),
+    },
 ];
 
 const router = createRouter({

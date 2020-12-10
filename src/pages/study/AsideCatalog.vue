@@ -4,13 +4,14 @@
         <h5 class="catalog-sub_title">目录引导 <span>(已学习{{rateOLearn}}%)</span></h5>
         <ul class="catalog-list">
             <li class="catalog-list-item" v-for="(item, index) in chapterList" :key="index">
-                <h6 class="catalog-list-item-title">{{index + 1}}. {{item.chapterName}}</h6>
-                <p v-for="(it, i) in item.contentTitleList" class="catalog-list-item-p">
-                    {{index + 1}}-{{i + 1}}. {{it.contentText}}</p>
+                <h6 :class="['catalog-list-item-title', !chapterIdList.includes(item.chapterId) ? 'no-click' : '']" @click="handleChapter(item)">{{index + 1}}. {{item.chapterName}}</h6>
+                <p v-for="(it, i) in item.contentTitleList" @click="handleContent(it)" :class="['catalog-list-item-p', !contentIdList.includes(it.contentId) ? 'no-click' : '']">
+                    <a href="">{{index + 1}}-{{i + 1}}. {{it.contentText}}</a>
+                    </p>
             </li>
         </ul>
         <h5 class="catalog-sub_title" v-if="courseInfo.materialsName">资料下载</h5>
-        <div class="catalog-card" v-if="courseInfo.materialsName">
+        <div @click="handleDownFile" class="catalog-card" v-if="courseInfo.materialsName">
             <h3 class="catalog-card-title">{{courseInfo.materialsName}}</h3>
             <span class="catalog-card-click">点击下载</span>
         </div>
@@ -20,7 +21,6 @@
 import { Options, Vue } from "vue-class-component";
 import { getCatalogDetail } from '@/api';
 import url from '@/api/baseUrl.ts';
-// chapterId contentId
 @Options({
     props: {
         studyList: {
@@ -41,13 +41,14 @@ import url from '@/api/baseUrl.ts';
     },
     watch: {
         studyList(value) {
-
-            // console.log(11, new Proxy(value));
-            // value[1].forEach(({chapterId, contentId}) => {
-            //     this.chapterIdList.push(chapterId);
-            //     this.contentIdList.push(contentId);
-            // });
-            // console.log(111, this.chapterIdList, this.contentIdList);
+            let contentIdList = [];
+            let chapterIdList = [];
+            this.studyList.forEach(({chapterId, contentId}) => {
+                chapterIdList.push(chapterId);
+                contentIdList.push(contentId);
+            });
+            this.chapterIdList = Array.from(chapterIdList);
+            this.contentIdList = Array.from(contentIdList);
         }
     },
     created() {
@@ -64,6 +65,27 @@ import url from '@/api/baseUrl.ts';
                 }
             });
         },
+        handleChapter(item) {
+            if (!this.chapterIdList.includes(item.chapterId)) {
+                return;
+            }
+            let el = document.getElementById(`chapter${item.chapterId}`);
+            this.$nextTick(() => {
+                window.scrollTo({behavior: 'smooth', top: el.offsetTop});
+            });
+        },
+        handleContent(item) {
+            if (!this.contentIdList.includes(item.contentId)) {
+                return;
+            }
+            let el = document.getElementById(`content${item.contentId}`);
+            this.$nextTick(() => {
+                window.scrollTo({behavior: 'smooth', top: el.offsetTop});
+            });
+        },
+        handleDownFile() {
+            // 点击下载文件
+        }
     }
 })
 export default class Catalog extends Vue {};
@@ -139,6 +161,10 @@ export default class Catalog extends Vue {};
         top: 0;
         display: inline-block;
         background: $orangeFontColor;
+    }
+    .no-click {
+        cursor: not-allowed;
+        color: $tipsColor;
     }
 }
 </style>

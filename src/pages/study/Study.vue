@@ -7,11 +7,11 @@
         <section class="study-content">
             <ul class="study-content-list">
                 <li class="study-content-list-item" v-for="(item, index) in studyList" :key="index">
-                    <div v-if="item.courseContentType === 'TITLE'" class="study-content-list-item-title">{{item.content}}</div>
+                    <div :id="`content${item.contentId}`" v-if="item.courseContentType === 'TITLE'" class="study-content-list-item-title">{{item.content}}</div>
                     <div v-if="item.courseContentType === 'IMAGE'" class="study-content-list-item-image">
                         <img class="study-content-list-item-image-img" :src="`${imageUrl}${item.content}`" alt=""/>
                     </div>
-                    <div v-if="item.courseContentType === 'TEXT'" class="study-content-list-item-text"> {{item.content}}</div>
+                    <div :id="`chapter${item.chapterId}`" v-if="item.courseContentType === 'TEXT'" class="study-content-list-item-text"> {{item.content}}</div>
                     <answer v-if="item.courseContentType === 'ANSWER'" :params="item" class="study-content-list-item-answer"/>
                 </li>
             </ul>
@@ -92,7 +92,7 @@ export default class Study extends Vue {};
         }
     }
     &-content {
-        width: 1500px;
+        width: 1400px;
         margin: 0 auto;
         box-sizing: border-box;
         height: 100vh;
