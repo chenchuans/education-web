@@ -9,9 +9,9 @@
             </li>
         </ul>
         <h5 class="catalog-sub_title" v-if="courseInfo.materialsName">资料下载</h5>
-        <div @click="handleDownFile" class="catalog-card" v-if="courseInfo.materialsName">
+        <div class="catalog-card" v-if="courseInfo.materialsName">
             <h3 class="catalog-card-title">{{courseInfo.materialsName}}</h3>
-            <span class="catalog-card-click">点击下载</span>
+            <a :href="`${imageUrl}${courseInfo.materialsUrl}`" :download="courseInfo.materialsUrl" class="catalog-card-click">点击下载</a>
         </div>
     </aside>
 </template>
@@ -83,9 +83,6 @@ import url from '@/api/baseUrl.ts';
                 el.scrollTop = 50;
                 // window.scrollTo({behavior: 'smooth', top: el.offsetTop});
             // });
-        },
-        handleDownFile() {
-            // 点击下载文件
         }
     }
 })
