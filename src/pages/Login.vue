@@ -196,6 +196,7 @@ export default class Login extends Vue {};
                     height: 40px;
                     width: 40px;
                     border-radius: 50%;
+                    cursor: pointer;
                 }
             }
             &-tips {
@@ -215,4 +216,11 @@ export default class Login extends Vue {};
   font-size: 16px;
   font-weight: 400;
 }
+</style>
+<style>
+    body {
+        margin: 0 !important;
+        width: 100vw;
+        height: 100vh;
+    }
 </style>

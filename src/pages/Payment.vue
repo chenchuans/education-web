@@ -8,6 +8,10 @@
                     <span class="payment-section-info-p-key">{{item.key}}</span>
                     <span class="payment-section-info-p-value">{{item.value}}</span>
                 </li>
+                <li class="payment-section-info-p">
+                    <span class="payment-section-info-p-key">支付完成请点击确认完成</span>
+                </li>
+                <ed-button @click="handleOrder" height="40px" width="100px" type="dark">确认完成</ed-button>
             </ul>
         </section>
     </div>
@@ -17,10 +21,10 @@
 import { Options, Vue } from "vue-class-component";
 import { formatterTime } from '@/libs/utils';
 // import { getHomeList } from '@/api';
-// import EdButton from '@/components/button/Index.vue';
+import EdButton from '@/components/button/Index.vue';
 
 @Options({
-    // components: { EdButton },
+    components: { EdButton },
     data () {
         return {
             infoList: [
@@ -37,6 +41,9 @@ import { formatterTime } from '@/libs/utils';
     methods: {
         handleTime(time) {
             return formatterTime(time);
+        },
+        handleOrder() {
+            // 点击确认订单，查询订单是否完成
         }
     }
 })

@@ -10,7 +10,7 @@
             <div class="item-content-desc">{{item.teacherDesc}}</div>
             <div class="item-content-bottom">
                 <div class="item-content-bottom-price">
-                    <ed-button @click="handleStudy(item.id)" type="dark">¥{{item.specialPrice}}购买</ed-button>
+                    <ed-button @click="handlePayment(item.id)" type="dark">¥{{item.specialPrice}}购买</ed-button>
                     <span class="item-content-bottom-price-origin">原价 ¥{{item.coursePrice}}</span>
                 </div>
             </div>
@@ -38,6 +38,10 @@ import EdButton from '@/components/button/Index.vue';
         }
     },
     methods: {
+        handlePayment(id) {
+            // courseId 发请求生成订单后，跳转到支付页面
+            this.$router.push(`/payment?courseId=${id}`);
+        }
     }
 })
 

@@ -5,9 +5,7 @@
         <ul class="catalog-list">
             <li class="catalog-list-item" v-for="(item, index) in chapterList" :key="index">
                 <h6 :class="['catalog-list-item-title', !chapterIdList.includes(item.chapterId) ? 'no-click' : '']" @click="handleChapter(item)">
-                    <!-- <a :href="`#chapter${item.chapterId}`"></a> -->
-                        {{index + 1}}. {{item.chapterName}}
-                    </h6>
+                    {{index + 1}}. {{item.chapterName}}</h6>
                 <p v-for="(it, i) in item.contentTitleList" @click="handleContent(it)" :class="['catalog-list-item-p', !contentIdList.includes(it.contentId) ? 'no-click' : '']">{{index + 1}}-{{i + 1}}. {{it.contentText}}</p>
             </li>
         </ul>
@@ -22,6 +20,7 @@
 import { Options, Vue } from "vue-class-component";
 import { getCatalogDetail } from '@/api';
 import url from '@/api/baseUrl.ts';
+import $ from 'jquery';
 @Options({
     props: {
         studyList: {
@@ -71,25 +70,28 @@ import url from '@/api/baseUrl.ts';
                 return;
             }
             let el = document.getElementById(`chapter${item.chapterId}`);
-            console.log(111, el);
-            
-            setTimeout(() => {
-                // document.scrollTop = 500;
-            }, 100);
-            // this.$nextTick(() => {
-                // window.scrollTo({behavior: 'smooth', top: el.offsetTop});
-            // });
         },
         handleContent(item) {
             if (!this.contentIdList.includes(item.contentId)) {
                 return;
             }
             let el = document.getElementById(`content${item.contentId}`);
-            // this.$nextTick(() => {
-                el.scrollTop = 50;
-                // window.scrollTo({behavior: 'smooth', top: el.offsetTop});
-            // });
-        }
+        },
+        // rightClick(index) {
+		// 	this.currentIndex = index;
+		// 	let jump = document.getElementsByClassName('section');
+		// 	// 获取需要滚动的距离
+		// 	let total = jump[index].offsetTop;
+		// 	// Chrome
+		// 	document.body.scrollTop = total;
+		// 	// Firefox
+		// 	document.documentElement.scrollTop = total;
+		// 	// Safari
+		// 	window.pageYOffset = total;
+		// 	$('html, body').animate({
+		// 		'scrollTop': total
+		// 	}, 400);
+		// },
     }
 })
 export default class Catalog extends Vue {};

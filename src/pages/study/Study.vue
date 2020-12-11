@@ -8,7 +8,6 @@
             <ul class="study-content-list">
                 <li class="study-content-list-item" v-for="(item, index) in studyList" :key="index">
                     <div :id="`chapter${item.chapterId}`" v-if="item.courseContentType === 'CHAPTER'" class="study-content-list-item-sub_title">
-                        <!-- <a :name="`chapter${item.chapterId}`"></a> -->
                         {{item.content}}
                     </div>
                     <div :id="`content${item.contentId}`" v-if="item.courseContentType === 'TITLE'" class="study-content-list-item-title">{{item.content}}</div>
@@ -36,6 +35,7 @@ import AsideCatalog from './AsideCatalog.vue';
 import { getAlreadyInfo, getContentItem } from '@/api';
 import EdButton from '@/components/button/Index.vue';
 import url from '@/api/baseUrl.ts';
+import $ from 'jquery';
 
 @Options({
     components: { EdButton, Answer, AsideCatalog },
@@ -58,6 +58,7 @@ import url from '@/api/baseUrl.ts';
             getAlreadyInfo({catalogId, courseId}).then((res: any) => {
                 if (res.code === 200) {
                     this.studyList = res.data.contentInfoList;
+                    this.clickBottom();
                 }
             });
         },
@@ -72,13 +73,33 @@ import url from '@/api/baseUrl.ts';
             getContentItem({catalogId, courseId, chapterId, contentId}).then((res: any) => {
                 if (res.code === 200) {
                     if (res.data.contentInfoList.length === 0) {
-                        this.buttonText = '完成课程';
+                        // this.buttonText = '完成课程';
                     } else {
                         this.studyList = [...this.studyList, ...res.data.contentInfoList];
                     }
+                    // window.scrollTo(0, document.documentElement.clientHeight);
+                    this.clickBottom();
                 }
             });
-        }
+        },
+        clickBottom() {
+            let mainContainer = $('.study'),
+            scrollToContainer = mainContainer.find('.study-content-item:last');
+            //滚动到<div id="thisMainPanel">中类名为son-panel的最后一个div处
+            //scrollToContainer = mainContainer.find('.son-panel:eq(5)');//滚动到<div id="thisMainPanel">中类名为son-panel的第六个处
+            //非动画效果
+            //mainContainer.scrollTop(
+            //  scrollToContainer.offset().top - mainContainer.offset().top + mainContainer.scrollTop()
+            //);
+            //动画效果
+            console.log(11, mainContainer, scrollToContainer.offset());
+            mainContainer.animate({
+                scrollTop: scrollToContainer.offset().top - mainContainer.offset().top
+            }, 1000);//2秒滑动到指定位置
+            // let h = $('.study-content-list').height()-$(window).height();
+            // $(document).scrollTop(h); 
+            // $('html, body').animate({scrollTop:$('.bottom').offset().top}, 400);
+		}
     }
 })
 export default class Study extends Vue {};
