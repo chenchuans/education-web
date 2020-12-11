@@ -22,6 +22,7 @@
 import { Options, Vue } from "vue-class-component";
 import url from '@/api/baseUrl.ts';
 import EdButton from '@/components/button/Index.vue';
+import { payOrder } from '@/api';
 
 @Options({
     name: 'ContentDetailItem',
@@ -38,9 +39,21 @@ import EdButton from '@/components/button/Index.vue';
         }
     },
     methods: {
-        handlePayment(id) {
+        handlePayment(courseId) {
             // courseId 发请求生成订单后，跳转到支付页面
-            this.$router.push(`/payment?courseId=${id}`);
+            payOrder({courseId}).then((res: any) => {
+                if (res.code === 200) {
+                    let orderInfo = res.data;
+                    const { businessName, goodName, orderId, orderTime, price } = res.data;
+                    // let codeUrl = res.data.codeUrl.replace('?', '!@#');
+                    // codeUrl = codeUrl.replace('=', '^*');
+                    // codeUrl = codeUrl.replace('&', '^^');
+                    // codeUrl = codeUrl.replace('=', '^*');
+                    // codeUrl = codeUrl.replace('&', '^^');
+                    // codeUrl = codeUrl.replace('=', '^*');
+                     this.$router.push(`/payment?businessName=${businessName}&goodName=${goodName}&orderId=${orderId}&orderTime=${orderTime}&price=${price}`);
+                }
+            });
         }
     }
 })

@@ -1,5 +1,5 @@
 <template>
-    <span :style="{width, height, lineHeight: height}" :class="[type, 'button']" @click="handleClick"><slot/></span>
+    <span :style="{width, height, lineHeight: height}" :class="[type, 'button']" ><slot/></span>
 </template>
 
 <script lang="ts">
@@ -19,15 +19,6 @@ import { Options, Vue } from "vue-class-component";
         type: {
             type: String,
             default: 'light'
-        }, 
-        params: {
-            type: Object,
-            default: () => {}
-        }
-    },
-    methods: {
-        handleClick() {
-            this.$emit('click', this.params);
         }
     }
 })
