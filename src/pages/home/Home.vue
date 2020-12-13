@@ -5,7 +5,6 @@
                 <input @keyup.enter="handleEnter" v-model="searchValue" class="home-search-all-input" placeholder="回车搜索课程名称,讲师姓名" type="text"/>
                 <span @click="handleSearch" class="home-search-all-button"></span>
             </div>
-            <!-- <img @click="handleSearch" class="home-search-button" src="./../../assets/img/search.png" alt=""/> -->
         </div>
         <ul class="home-list">
             <content-item v-for="(item, index) in list" :key="index" class="home-list-item" :item="item"/>

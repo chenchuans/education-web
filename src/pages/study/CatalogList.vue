@@ -10,7 +10,7 @@
                 <!-- <p v-if="item.isHaveAuth" class="catalog-list-item-time">2020年11月2日</p> -->
                 <footer v-if="item.isHaveAuth" class="catalog-list-item-footer">
                     <span class="catalog-list-item-footer-status">已完成{{item.rateOLearn}}%</span>
-                    <ed-button type="dark" class="catalog-list-item-footer-button">开始学习</ed-button>
+                    <ed-button type="dark" class="catalog-list-item-footer-button">{{item.rateOLearn === 100 ? '复习' : '继续学习'}}</ed-button>
                 </footer>
             </li>
         </ul>
