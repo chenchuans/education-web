@@ -9,7 +9,7 @@
             <h2 class="detail-catalog-title">课程目录</h2>
             <ul class="detail-catalog-list">
                 <li v-for="(item, index) in catalogList" :key="index" class="detail-catalog-list-item">
-                {{item.orderNum + 1}} | {{item.catalogName}}
+               {{index + 1}} | {{item.catalogName}}
                 <span class="detail-catalog-list-item-desc">{{item.catalogDescContent}}</span>
                 </li>
             </ul>

@@ -4,9 +4,9 @@
         <h5 class="catalog-sub_title">目录引导 <span>(已学习{{rateOLearn}}%)</span></h5>
         <ul class="catalog-list">
             <li class="catalog-list-item" v-for="(item, index) in chapterList" :key="index">
-                <h6 :class="['catalog-list-item-title', !chapterIdList.includes(item.chapterId) ? 'no-click' : '']" @click="handleChapter(item)">
+                <h6 :class="['catalog-list-item-title', !chapterIdList.includes(item.chapterId) ? 'no-click' : '', currentClickId === item.chapterId ? 'current-click' : '']" @click="handleChapter(item)">
                     {{index + 1}}. {{item.chapterName}}</h6>
-                <p v-for="(it, i) in item.contentTitleList" @click="handleContent(it)" :class="['catalog-list-item-p', !contentIdList.includes(it.contentId) ? 'no-click' : '']">{{index + 1}}-{{i + 1}}. {{it.contentText}}</p>
+                <p v-for="(it, i) in item.contentTitleList" @click="handleContent(it)" :class="['catalog-list-item-p', !contentIdList.includes(it.contentId) ? 'no-click' : '', currentClickId === it.contentId ? 'current-click' : '']">{{index + 1}}-{{i + 1}}. {{it.contentText}}</p>
             </li>
         </ul>
         <h5 class="catalog-sub_title" v-if="courseInfo.materialsName">资料下载</h5>
@@ -35,6 +35,7 @@ import $ from 'jquery';
             rateOLearn: 0,
             chapterIdList: [],
             contentIdList: [],
+            currentClickId: 0,
             imageUrl: url.imageUrl,
             courseName: this.$route.query.courseName
         };
@@ -65,33 +66,28 @@ import $ from 'jquery';
                 }
             });
         },
-        handleChapter(item) {
-            if (!this.chapterIdList.includes(item.chapterId)) {
+        handleChapter({chapterId}) {
+            if (!this.chapterIdList.includes(chapterId)) {
                 return;
             }
-            let el = document.getElementById(`chapter${item.chapterId}`);
+            this.rightClick(`#chapter${chapterId}`, chapterId);
         },
-        handleContent(item) {
-            if (!this.contentIdList.includes(item.contentId)) {
+        handleContent({contentId}) {
+            if (!this.contentIdList.includes(contentId)) {
                 return;
             }
-            let el = document.getElementById(`content${item.contentId}`);
+            this.rightClick(`#content${contentId}`, contentId);
         },
-        // rightClick(index) {
-		// 	this.currentIndex = index;
-		// 	let jump = document.getElementsByClassName('section');
-		// 	// 获取需要滚动的距离
-		// 	let total = jump[index].offsetTop;
-		// 	// Chrome
-		// 	document.body.scrollTop = total;
-		// 	// Firefox
-		// 	document.documentElement.scrollTop = total;
-		// 	// Safari
-		// 	window.pageYOffset = total;
-		// 	$('html, body').animate({
-		// 		'scrollTop': total
-		// 	}, 400);
-		// },
+        rightClick(idName, id) {
+            if (this.currentClickId === id) {
+                return;
+            }
+            this.currentClickId = id;
+			const top  = $(idName).offset().top;
+            $('html, body .study-content-list').animate({
+                'scrollTop': top
+            }, 1000);
+		}
     }
 })
 export default class Catalog extends Vue {};
@@ -131,6 +127,15 @@ export default class Catalog extends Vue {};
                 text-overflow: ellipsis;
                 white-space: nowrap;
                 cursor: pointer;
+            }
+            &-title:hover {
+                color: $orangeFontColor;
+            }
+            &-p:hover {
+                color: $orangeFontColor;
+            }
+            .current-click {
+                color: $orangeFontColor;
             }
         }
     }
