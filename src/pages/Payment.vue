@@ -1,8 +1,8 @@
 <template>
     <div class="payment">
-        <h2 class="payment-title">支付金额<span>￥{{orderInfo.price}}</span>,请使用微信扫描下面二维码完成</h2>
+        <h2 class="payment-title">支付金额<span>￥{{orderInfo.price}}</span>,请使用微信扫描下面二维码完成付款</h2>
         <section class="payment-section">
-            <canvas id="code" style="width: 300px; height: 300px" width="300" height="300"></canvas>
+            <canvas id="code"></canvas>
             <ul class="payment-section-info">
                 <li class="payment-section-info-p">
                     <span class="payment-section-info-p-key">商家名称:</span>
@@ -45,19 +45,14 @@ import QRCode from 'qrcode';
     },
     mounted() {
         this.orderInfo = this.$route.query;
-        console.log(111, this.orderInfo.orderTime, this.handleTime(+this.orderInfo.orderTime))
-        // this.orderInfo = JSON.parse(this.$route.query.orderInfo);
-        // this.orderInfo.codeUrl.replace('!@#', '?');
-        let codeUrl = 'weixin://wxpay/bizpayurl/up?pr=NwY5Mz9&groupid=00';
-        // this.orderInfo = {...this.$route.query};
-        console.log(11,  this.orderInfo, this.$route.query);
-        // console.log(111, this.orderInfo, JSON.parse(this.$route.query.orderInfo));
-        // const { codeUrl } = this.orderInfo;
-        QRCode.toCanvas(document.getElementById('code'), codeUrl, error => {});
+        const codeUrl = 'weixin://wxpay/bizpayurl/up?pr=NwY5Mz9&groupid=00';
+        this.$nextTick(() => {
+            QRCode.toCanvas(document.getElementById('code'), codeUrl, error => {});
+        });
     },
     methods: {
         handleTime(time) {
-            return formatterTime(time);
+            return formatterTime(time); 
         },
         handleOrder() {
             // 点击确认订单，查询订单是否完成
@@ -96,6 +91,10 @@ export default class Payment extends Vue {};
     &-section {
         display: flex;
         justify-content: space-between;
+        #code {
+            width: 300px !important;
+            height: 300px !important;
+        }
         &-info {
             box-sizing: border-box;
             padding-top: 20px;

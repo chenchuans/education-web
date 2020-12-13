@@ -48,9 +48,6 @@ import { payOrder } from '@/api';
                     // let codeUrl = res.data.codeUrl.replace('?', '!@#');
                     // codeUrl = codeUrl.replace('=', '^*');
                     // codeUrl = codeUrl.replace('&', '^^');
-                    // codeUrl = codeUrl.replace('=', '^*');
-                    // codeUrl = codeUrl.replace('&', '^^');
-                    // codeUrl = codeUrl.replace('=', '^*');
                      this.$router.push(`/payment?businessName=${businessName}&goodName=${goodName}&orderId=${orderId}&orderTime=${orderTime}&price=${price}`);
                 }
             });
