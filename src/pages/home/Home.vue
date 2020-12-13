@@ -1,8 +1,11 @@
 <template>
     <div class="page home">
         <div class="home-search">
-            <input @keyup.enter="handleEnter" v-model="searchValue" class="home-search-input" placeholder="回车搜索课程名称,讲师姓名" type="text"/>
-            <span @click="handleSearch" class="home-search-button">🔍</span>
+            <div class="home-search-all">
+                <input @keyup.enter="handleEnter" v-model="searchValue" class="home-search-all-input" placeholder="回车搜索课程名称,讲师姓名" type="text"/>
+                <span @click="handleSearch" class="home-search-all-button"></span>
+            </div>
+            <!-- <img @click="handleSearch" class="home-search-button" src="./../../assets/img/search.png" alt=""/> -->
         </div>
         <ul class="home-list">
             <content-item v-for="(item, index) in list" :key="index" class="home-list-item" :item="item"/>
@@ -79,22 +82,31 @@ export default class Home extends Vue {};
         width: 400px;
         padding: 20px 0 40px 0;
         display: flex;
-        &-input {
-            border: 1px solid $inputBorderColor;
-            border-radius: 16px;
-            color: $formColor;
-            background-color: transparent;
-            outline: none;
+        &-all {
             width: 360px;
             height: 36px;
-            padding: 0 20px;
-            line-height: 30px;
-            font-size: 16px;
-        }
-        &-button {
-            margin-left: 5px;
-            font-size: 28px;
-            cursor: pointer;
+            position: relative;
+            &-input {
+                border: 1px solid $inputBorderColor;
+                border-radius: 16px;
+                color: $formColor;
+                width: 360px;
+                height: 36px;
+                padding: 0 20px;
+                background-color: transparent;
+                outline: none;
+                line-height: 30px;
+                font-size: 16px;
+            }
+            &-button {
+                background: url('./../../assets/img/search.png') 100% 100%;
+                position: absolute;
+                right: 5px;
+                width: 36px;
+                height: 36px;
+                top: -2px;
+                cursor: pointer;
+            }
         }
     }
     &-list {
@@ -111,6 +123,10 @@ export default class Home extends Vue {};
             font: 400 12px/3 '';
             color: $tipsColor;
         }
+    }
+    ::-webkit-input-placeholder { /* WebKit browsers */
+        color: #999;
+        font-size: 16px;
     }
 }
 </style>

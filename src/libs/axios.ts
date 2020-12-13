@@ -5,7 +5,7 @@
 
 import axios, { AxiosInstance, AxiosRequestConfig, AxiosPromise, AxiosResponse } from 'axios';
 import { getUid, getToken, removeToken, removeUid, removeUsername } from '@/libs/session.ts';
-// import { Message } from 'element-ui';
+import { Toast } from 'vant';
 
 const validateUrlList: string[] = [
     '/font/home/courseDetail', '/font/home/list', '/user/userSmsLogin', '/user/userGetVC',
@@ -28,9 +28,6 @@ class Ajax {
                 config.headers['token'] = getToken();
                 config.headers['uuid'] = getUid();
             }
-            // if ((url as string).includes('common/upload')) {
-            //     config.headers['Content-Type'] = 'multipart/form-data;';
-            // }
             return config;
         }, error => Promise.reject(error));
 
@@ -41,25 +38,19 @@ class Ajax {
                 removeToken();
                 removeUid();
                 removeUsername();
-                // Message({
-                //     message: '当前用户已经在其他地方登录，请及时修改密码!',
-                //     type: 'error'
-                // });
-                window.location.hash = "#/login";
+                Toast('当前用户已经在其他地方登录，请及时修改密码!');
+                window.location.hash = '#/login';
                 return;
             }
             if (code !== 200) {
                 // 提示 message 错误信息
-                // Message({
-                //     message,
-                //     type: 'error'
-                // });
+                Toast(message);
             }
             return res.data;
         }, (error: string) => {
             // 提示网络错误
-            // Message.error(error);
-            Promise.reject(error)
+            Toast('网络错误,请检查网络');
+            Promise.reject(error);
         });
     }
 

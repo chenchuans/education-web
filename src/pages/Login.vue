@@ -73,6 +73,7 @@ import { setUsername, setUid, setToken } from '@/libs/session';
                     setUsername(userName);
                     setUid(id);
                     setToken(token);
+                    this.$toast('登录成功');
                     this.$router.replace('/home');
                 } else if (res.code === 201) {
                     this.errorText = res.message;

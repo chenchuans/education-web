@@ -59,6 +59,7 @@ import QRCode from 'qrcode';
             const { orderId } = this.orderInfo;
             getOrderStatus({orderId}).then((res: any) => {
                 if (res.code === 200) {
+                    this.toast('购买成功');
                     this.$router.replace('/order-my');
                 }
             });
