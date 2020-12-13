@@ -10,7 +10,7 @@
                         <p class="course-list-item-left-content-p">学完 {{item.rateOfLearningPercentage}}%</p>
                     </div>
                 </aside>
-                <ed-button type="dark" @click="handleStudy(item.courseId)" class="course-list-item-button">开始学习</ed-button>
+                <ed-button type="dark" @click="handleStudy(item.courseId)" class="course-list-item-button">{{item.rateOfLearningPercentage === 100 ? '复习' : '继续学习'}}</ed-button>
             </li>
         </ul>
     </div>
