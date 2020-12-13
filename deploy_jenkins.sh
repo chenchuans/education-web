@@ -1,3 +1,4 @@
+export PATH=/root/node-v12.8.1-linux-x64/bin:$PATH
 npm config set registry http://registry.npm.taobao.org/
 # 安装yarn
 npm i yarn -g
