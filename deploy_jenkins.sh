@@ -11,7 +11,6 @@ yarn
 # 打包
 yarn build
 
-
 # 创建新镜像
 docker build -t gjf/web . && \
 

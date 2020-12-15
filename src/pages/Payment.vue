@@ -45,14 +45,15 @@ import QRCode from 'qrcode';
     },
     mounted() {
         this.orderInfo = this.$route.query;
-        const codeUrl = 'weixin://wxpay/bizpayurl/up?pr=NwY5Mz9&groupid=00';
+        const codeUrl = decodeURIComponent(this.$route.query.codeUrl);
+        // const codeUrl = 'weixin://wxpay/bizpayurl/up?pr=NwY5Mz9&groupid=00';
         this.$nextTick(() => {
             QRCode.toCanvas(document.getElementById('code'), codeUrl, error => {});
         });
     },
     methods: {
         handleTime(time) {
-            return formatterTime(time); 
+            return formatterTime(time);
         },
         handleOrder() {
             // 点击确认订单，查询订单是否完成

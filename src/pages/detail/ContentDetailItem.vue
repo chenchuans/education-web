@@ -44,11 +44,8 @@ import { payOrder } from '@/api';
             payOrder({courseId}).then((res: any) => {
                 if (res.code === 200) {
                     let orderInfo = res.data;
-                    const { businessName, goodName, orderId, orderTime, price } = res.data;
-                    // let codeUrl = res.data.codeUrl.replace('?', '!@#');
-                    // codeUrl = codeUrl.replace('=', '^*');
-                    // codeUrl = codeUrl.replace('&', '^^');
-                     this.$router.push(`/payment?businessName=${businessName}&goodName=${goodName}&orderId=${orderId}&orderTime=${orderTime}&price=${price}`);
+                    const { businessName, goodName, orderId, orderTime, price, codeUrl } = res.data;
+                     this.$router.push(`/payment?businessName=${businessName}&goodName=${goodName}&orderId=${orderId}&orderTime=${orderTime}&price=${price}&codeUrl=${encodeURIComponent(codeUrl)}`);
                 }
             });
         }
