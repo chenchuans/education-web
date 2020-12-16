@@ -46,7 +46,6 @@ import QRCode from 'qrcode';
     mounted() {
         this.orderInfo = this.$route.query;
         const codeUrl = decodeURIComponent(this.$route.query.codeUrl);
-        // const codeUrl = 'weixin://wxpay/bizpayurl/up?pr=NwY5Mz9&groupid=00';
         this.$nextTick(() => {
             QRCode.toCanvas(document.getElementById('code'), codeUrl, error => {});
         });

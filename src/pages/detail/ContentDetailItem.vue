@@ -45,7 +45,7 @@ import { payOrder } from '@/api';
                 if (res.code === 200) {
                     let orderInfo = res.data;
                     const { businessName, goodName, orderId, orderTime, price, codeUrl } = res.data;
-                     this.$router.push(`/payment?businessName=${businessName}&goodName=${goodName}&orderId=${orderId}&orderTime=${orderTime}&price=${price}&codeUrl=${encodeURIComponent(codeUrl)}`);
+                    this.$router.push(`/payment?businessName=${businessName}&goodName=${goodName}&orderId=${orderId}&orderTime=${orderTime}&price=${price}&codeUrl=${encodeURIComponent(codeUrl)}`);
                 }
             });
         }

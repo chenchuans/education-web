@@ -19,7 +19,7 @@
                 <ul class="login-card-footer-list">
                     <img src="./../assets/img/wx-icon.png" class="login-card-footer-list-item"/>
                 </ul>
-                <p class="login-card-footer-tips">登录即表示同意 
+                <p class="login-card-footer-tips">登录即表示同意
                     <span>《用户协议》</span> 和
                     <span>《隐私政策》</span>
                     </p>
@@ -79,12 +79,15 @@ import { setUsername, setUid, setToken } from '@/libs/session';
                     this.errorText = res.message;
                 }
             });
-            
+
         },
         handleCode() {
             if (!this.disabled) {
+                this.handleCountdown();
                 getCode({userName: this.userInfo.phone}).then((res: any) => {
-                    this.handleCountdown();
+                    if (res.code === 200) {
+                        this.$toast('验证码发送成功');
+                    }
                 });
             }
         },
@@ -132,7 +135,7 @@ export default class Login extends Vue {};
         border-radius: 8px;
         box-shadow: 0 0 14px 2px $shadowColor;
         &-form {
-            padding-top: 20px; 
+            padding-top: 20px;
             &-item {
                 margin-bottom: 10px;
                 &-input {
