@@ -14,12 +14,20 @@
                 </footer>
             </li>
         </ul>
+        <van-overlay :show="isOverlay">
+            <div class="wrapper">
+                <van-radio-group v-model="currentVersionId">
+                    <van-radio v-for="(item, index) in versionList" :key="index" :name="item.id">{{item.versionName}}</van-radio>
+                </van-radio-group>
+                <ed-button @click="selectVersion" type="dark" class="bottom">确定</ed-button>
+            </div>
+        </van-overlay>
     </div>
 </template>
 
 <script lang="ts">
 import { Options, Vue } from "vue-class-component";
-import { getCatalogList } from '@/api';
+import { getCatalogList, submitVersion } from '@/api';
 import EdButton from '@/components/button/Index.vue';
 import url from '@/api/baseUrl.ts';
 
@@ -27,9 +35,12 @@ import url from '@/api/baseUrl.ts';
     components: { EdButton },
     data() {
         return {
+            isOverlay: false,
+            currentVersionId: 0,
             catalogList: [],
             imageUrl: url.imageUrl,
-            courseInfo: {}
+            courseInfo: {},
+            versionList: []
         }
     },
     created() {
@@ -40,8 +51,22 @@ import url from '@/api/baseUrl.ts';
             const { courseId } = this.$route.query;
             getCatalogList({ courseId }).then((res: any) => {
                 if (res.code === 200) {
-                    this.catalogList = res.data.catalogInfoList;
-                    this.courseInfo = res.data.courseInfo;
+                    // 已经选择课程版本
+                    if (res.data.isChoseVersion) {
+                        this.catalogList = res.data.catalogInfoList;
+                        this.courseInfo = res.data.courseInfo;
+                    } else {
+                        this.isOverlay = true;
+                        this.versionList = res.data.courseVersionInfos;
+                    }
+                }
+            });
+        },
+        selectVersion() {
+            const {id, courseId} = this.versionList.find(item => item.id === this.currentVersionId);
+            submitVersion({ versionId: id, courseId }).then((res: any) => {
+                if (res.code === 200) {
+                    this.getInfo();
                 }
             });
         },
@@ -137,6 +162,21 @@ export default class CatalogList extends Vue {};
             transform: none;
         }
     }
-
+    .wrapper {
+        width: 400px;
+        min-height: 100px;
+        box-sizing: border-box;
+        padding: 20px;
+        background-color: #fff;
+        border-radius: 5px;
+        position: absolute;
+        margin: -50px 0 0 -150px;
+        left: 50%;
+        top: 50%;
+        text-align: center;
+        .bottom {
+            margin-top: 20px;
+        }
+    }
 }
 </style>

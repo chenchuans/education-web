@@ -49,3 +49,12 @@ export const answer = (data: any): AxiosPromise<ResponseType> => {
         method: 'post',
     });
 };
+
+// 学习模块 -> 学习页面-> 答题
+export const submitVersion = (data: any): AxiosPromise<ResponseType> => {
+    return ajax.request({
+        url: baseUrl + '/learn/version/choseVersion',
+        data,
+        method: 'post',
+    });
+};
