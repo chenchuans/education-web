@@ -10,7 +10,7 @@
                         <p class="course-list-item-left-content-p">学完 {{item.rateOfLearningPercentage}}%</p>
                     </div>
                 </aside>
-                <ed-button type="dark" @click="handleStudy(item.courseId)" class="course-list-item-button">{{item.rateOfLearningPercentage === 100 ? '复习' : '继续学习'}}</ed-button>
+                <ed-button type="dark" @click="handleStudy(item)" class="course-list-item-button">{{item.rateOfLearningPercentage === 100 ? '复习' : '继续学习'}}</ed-button>
             </li>
         </ul>
     </div>
@@ -41,7 +41,7 @@ import EdButton from '@/components/button/Index.vue';
                 }
             });
         },
-        handleStudy(courseId) {
+        handleStudy({ courseId }) {
             this.$router.push(`/catalog-list?courseId=${courseId}`);
         }
     }

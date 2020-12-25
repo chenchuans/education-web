@@ -4,22 +4,49 @@
             <img class="catalog-title-img" :src="`${imageUrl}${courseInfo.courseCoverImageUrl}`"/>
             <h4>{{courseInfo.courseName}}</h4>
         </h2>
-        <ul class="catalog-list">
-            <li :class="['catalog-list-item', item.isHaveAuth ? '' : 'catalog-list-item_min']" v-for="(item, index) in catalogList" :key="index" @click="handleStudy(index, item)">
-                <h3 class="catalog-list-item-title">第{{index + 1}}章 {{item.catalogName}}</h3>
-                <!-- <p v-if="item.isHaveAuth" class="catalog-list-item-time">2020年11月2日</p> -->
-                <footer v-if="item.isHaveAuth" class="catalog-list-item-footer">
-                    <span class="catalog-list-item-footer-status">已完成{{item.rateOLearn}}%</span>
-                    <ed-button type="dark" class="catalog-list-item-footer-button">{{item.rateOLearn === 100 ? '复习' : '继续学习'}}</ed-button>
-                </footer>
-            </li>
-        </ul>
+        <template v-if="catalogList.filter(item => item.isExperienceClass).length > 0">
+            <h3 class="catalog-type">体验课</h3>
+            <ul class="catalog-list">
+                <li :class="['catalog-list-item', item.isHaveAuth ? '' : 'catalog-list-item_min']" v-for="(item, index) in catalogList.filter(item => item.isExperienceClass)" :key="index" @click="handleStudy(index, item)">
+                    <h3 class="catalog-list-item-title">第{{index + 1}}章 {{item.catalogName}}</h3>
+                    <!-- <p v-if="item.isHaveAuth" class="catalog-list-item-time">2020年11月2日</p> -->
+                    <footer v-if="item.isHaveAuth" class="catalog-list-item-footer">
+                        <span class="catalog-list-item-footer-status">已完成{{item.rateOLearn}}%</span>
+                        <ed-button type="dark" class="catalog-list-item-footer-button">{{item.rateOLearn === 100 ? '复习' : '继续学习'}}</ed-button>
+                    </footer>
+                </li>
+            </ul>
+        </template>
+        <template v-if="catalogList.filter(item => !item.isExperienceClass).length > 0">
+            <h3 class="catalog-type">进阶课</h3>
+            <ul class="catalog-list">
+                <li :class="['catalog-list-item', item.isHaveAuth ? '' : 'catalog-list-item_min']" v-for="(item, index) in catalogList.filter(item => !item.isExperienceClass)" :key="index" @click="handleStudy(index, item)">
+                    <h3 class="catalog-list-item-title">第{{index + 1}}章 {{item.catalogName}}</h3>
+                    <!-- <p v-if="item.isHaveAuth" class="catalog-list-item-time">2020年11月2日</p> -->
+                    <footer v-if="item.isHaveAuth" class="catalog-list-item-footer">
+                        <span class="catalog-list-item-footer-status">已完成{{item.rateOLearn}}%</span>
+                        <ed-button type="dark" class="catalog-list-item-footer-button">{{item.rateOLearn === 100 ? '复习' : '继续学习'}}</ed-button>
+                    </footer>
+                </li>
+            </ul>
+        </template>
+        <!-- 选择课程的弹窗 -->
         <van-overlay :show="isOverlay">
             <div class="wrapper">
                 <van-radio-group v-model="currentVersionId">
                     <van-radio v-for="(item, index) in versionList" :key="index" :name="item.id">{{item.versionName}}</van-radio>
                 </van-radio-group>
                 <ed-button @click="selectVersion" type="dark" class="bottom">确定</ed-button>
+            </div>
+        </van-overlay>
+        <!-- 进阶课购买 -->
+        <van-overlay :show="payPopup">
+            <div class="pay">
+                <canvas id="code"></canvas>
+                <p class="pay-order">
+                    <span class="pay-order-tips">支付完成请点击确定查询订单状态</span>
+                    <ed-button @click="selectVersion" type="dark" class="bottom">确定</ed-button>
+                </p>
             </div>
         </van-overlay>
     </div>
@@ -30,12 +57,14 @@ import { Options, Vue } from "vue-class-component";
 import { getCatalogList, submitVersion } from '@/api';
 import EdButton from '@/components/button/Index.vue';
 import url from '@/api/baseUrl.ts';
+import QRCode from 'qrcode';
 
 @Options({
     components: { EdButton },
     data() {
         return {
             isOverlay: false,
+            payPopup: false,
             currentVersionId: 0,
             catalogList: [],
             imageUrl: url.imageUrl,
@@ -66,6 +95,8 @@ import url from '@/api/baseUrl.ts';
             const {id, courseId} = this.versionList.find(item => item.id === this.currentVersionId);
             submitVersion({ versionId: id, courseId }).then((res: any) => {
                 if (res.code === 200) {
+                    this.isOverlay = false;
+                    this.$toast(res.message);
                     this.getInfo();
                 }
             });
@@ -75,6 +106,11 @@ import url from '@/api/baseUrl.ts';
                 const { courseName } = this.courseInfo;
                 this.$router.push(`/study?courseId=${courseId}&catalogId=${catalogId}&courseName=${courseName}&catalogName=${catalogName}&index=${index + 1}`);
             }
+        },
+        handleCode(codeUrl = 'weixin://wxpay/bizpayurl/up?pr=NwY5Mz9&groupid=00') {
+            this.$nextTick(() => {
+                QRCode.toCanvas(document.getElementById('code'), codeUrl, error => {});
+            });
         }
     }
 })
@@ -162,6 +198,10 @@ export default class CatalogList extends Vue {};
             transform: none;
         }
     }
+    &-type {
+        font: 20px/1.5 '';
+        text-align: center;
+    }
     .wrapper {
         width: 400px;
         min-height: 100px;
@@ -176,6 +216,30 @@ export default class CatalogList extends Vue {};
         text-align: center;
         .bottom {
             margin-top: 20px;
+        }
+    }
+    .pay {
+        width: 400px;
+        height: 400px;
+        margin: -200px 0 0 -200px;
+        left: 50%;
+        top: 50%;
+        position: absolute;
+        text-align: center;
+        background-color: #fff;
+        border-radius: 5px;
+        box-sizing: border-box;
+        padding: 20px;
+        #code {
+            width: 300px !important;
+            height: 300px !important;
+        }
+        &-order {
+
+            &-tips {
+                font: 14px/1 '';
+
+            }
         }
     }
 }
