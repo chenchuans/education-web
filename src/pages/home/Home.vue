@@ -13,6 +13,9 @@
             <ed-button width="180px" height="50px" class="home-footer-button" v-if="isMoreData" @click="handleMore" type="dark">加载更多</ed-button>
         <p class="home-footer-tips" v-else>我也是有底线的</p>
         </footer>
+        <div class="home-website">
+            <p class="home-website-info">数趣网络 豫ICP备2020037022号</p>
+        </div>
     </div>
 </template>
 
@@ -121,6 +124,18 @@ export default class Home extends Vue {};
         &-tips {
             font: 400 12px/3 '';
             color: $tipsColor;
+        }
+    }
+    &-website {
+        background: #fafafa;
+        position: fixed;
+        bottom: 0;
+        min-height: 30px;
+        width: 100%;
+        &-info {
+            text-align: center;
+            font: 12px/30px '';
+            color: #888;
         }
     }
     ::-webkit-input-placeholder { /* WebKit browsers */
