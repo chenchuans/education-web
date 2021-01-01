@@ -83,6 +83,11 @@ import { setUsername, setUid, setToken } from '@/libs/session';
         },
         handleCode() {
             if (!this.disabled) {
+                this.handlePhonefocus();
+                const { isPhoneValidate, isCodeValidate }  = this;
+                if (isPhoneValidate || isCodeValidate) {
+                    return;
+                }
                 this.handleCountdown();
                 getCode({userName: this.userInfo.phone}).then((res: any) => {
                     if (res.code === 200) {
@@ -119,10 +124,9 @@ export default class Login extends Vue {};
 @import '@/styles/variables.scss';
 @import '@/styles/global.scss';
 .login {
-    background-image: url('./../assets/img/bag.png');
-    background-size: 1920px 1080px;
-    width: 100%;
-    height: 100%;
+    background-color: #FFF0CB;
+    width: 100vw;
+    height: 100vh;
     position: relative;
     overflow: hidden;
     &-card {
