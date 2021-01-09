@@ -2,7 +2,7 @@
     <div class="login" style="">
         <section class="login-card">
             <h1 class="login-card-title">{{loginType === 'phone' ? '手机号登录' : '绑定手机'}}</h1>
-            <div class="login-card-wx_info">
+            <div class="login-card-wx_info" v-if="loginType === 'wx'">
                 <img class="login-card-wx_info-img" :src="wxInfo.wxIconUrl" alt=""/>
                 <p class="login-card-wx_info-nick">{{wxInfo.wxNickName}}</p>
                 <h5 class="login-card-wx_info-tips" v-if="loginType === 'wx'">为了您的账号安全，请先绑定手机号</h5>
