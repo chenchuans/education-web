@@ -17,7 +17,9 @@
             <p v-show="isCodeError" class="login-card-error">{{errorText}}</p>
             <footer class="login-card-footer">
                 <ul class="login-card-footer-list">
-                    <img src="./../assets/img/wx-icon.png" class="login-card-footer-list-item"/>
+                    <a :href="wxLoginUrl">
+                        <img src="./../assets/img/wx-icon.png" class="login-card-footer-list-item"/>
+                    </a>
                 </ul>
                 <p class="login-card-footer-tips">登录即表示同意
                     <span>《用户协议》</span> 和
@@ -51,11 +53,18 @@ import { setUsername, setUid, setToken } from '@/libs/session';
             loginDisabled: false,
             disabledText: '重新发送(60s)',
             initText: '获取验证码',
-            errorText: '请输入正确的验证码'
+            errorText: '请输入正确的验证码',
+            // wxLoginUrl: 'https://open.weixin.qq.com/connect/qrconnect?appid=wx2361d8dcb69d7c18&redirect_uri=https%3a%2f%2fwww.shuquedu.com&response_type=code&scope=snsapi_login&state=STATE#wechat_redirect'
+            wxLoginUrl: 'https://shuquedu.com:8088/eduweb/v1/user/userWXLogin'
         };
     },
     beforeUnmount() {
         clearInterval(this.timer);
+    },
+    activated() {
+        // 监听 this.$route.query 的 state 参数
+        const { code, state } = this.$route.query;
+        console.log(1111, code);
     },
     methods: {
         handleLogin() {
