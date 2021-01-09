@@ -1,7 +1,12 @@
 <template>
     <div class="login" style="">
         <section class="login-card">
-            <h1 class="login-card-title">手机号登录</h1>
+            <h1 class="login-card-title">{{loginType === 'phone' ? '手机号登录' : '绑定手机'}}</h1>
+            <div class="login-card-wx_info">
+                <img class="login-card-wx_info-img" :src="wxInfo.wxIconUrl" alt=""/>
+                <p class="login-card-wx_info-nick">{{wxInfo.wxNickName}}</p>
+                <h5 class="login-card-wx_info-tips" v-if="loginType === 'wx'">为了您的账号安全，请先绑定手机号</h5>
+            </div>
             <form class="login-card-form">
                 <div class="login-card-form-item">
                     <input @blur="handlePhonefocus" class="login-card-form-item-input" type="text" v-model="userInfo.phone" placeholder="手机号"/>
@@ -13,7 +18,7 @@
                     <p v-show="isCodeValidate" class="login-card-form-item-error">{{errorText}}</p>
                 </div>
             </form>
-            <ed-button @click="handleLogin" width="100%" height="46px" type="dark" class="login-card-button">登录</ed-button>
+            <ed-button @click="handleLogin" width="100%" height="46px" type="dark" class="login-card-button">{{loginType === 'phone' ? '登录' : '完成'}}</ed-button>
             <p v-show="isCodeError" class="login-card-error">{{errorText}}</p>
             <footer class="login-card-footer">
                 <ul class="login-card-footer-list">
@@ -21,7 +26,7 @@
                         <img src="./../assets/img/wx-icon.png" class="login-card-footer-list-item"/>
                     </a>
                 </ul>
-                <p class="login-card-footer-tips">登录即表示同意
+                <p class="login-card-footer-tips">{{loginType === 'phone' ? '登录' : '完成'}}即表示同意
                     <span>《用户协议》</span> 和
                     <span>《隐私政策》</span>
                     </p>
@@ -34,7 +39,7 @@
 import { Options, Vue } from "vue-class-component";
 import EdButton from '@/components/button/Index.vue';
 import { isPhone, isPhoneCode } from '@/libs/validate.ts';
-import { login, getCode } from '@/api';
+import { login, getCode, wxLogin } from '@/api';
 import { setUsername, setUid, setToken } from '@/libs/session';
 
 @Options({
@@ -45,6 +50,8 @@ import { setUsername, setUid, setToken } from '@/libs/session';
                 phone: '',
                 code: ''
             },
+            wxInfo: {},
+            loginType: 'phone',
             timer: null,
             isPhoneValidate: false,
             isCodeValidate: false,
@@ -61,22 +68,27 @@ import { setUsername, setUid, setToken } from '@/libs/session';
     beforeUnmount() {
         clearInterval(this.timer);
     },
-    activated() {
-        // 监听 this.$route.query 的 state 参数
+    mounted() {
         const { code, state } = this.$route.query;
-        console.log(1111, code);
+        if (code) {
+            this.handleWxLogin(code, state);
+        }
     },
     methods: {
         handleLogin() {
             this.handlePhonefocus();
             this.handleCodefocus();
             this.isCodeError = false;
-            const { isPhoneValidate, isCodeValidate }  = this;
+            const { isPhoneValidate, isCodeValidate, loginType }  = this;
             if (isPhoneValidate || isCodeValidate) {
                 return;
             }
             const { phone, code } = this.userInfo;
-            login({userName: phone, verificationCode: code}).then((res: any) => {
+            let params = {userName: phone, verificationCode: code};
+            if (loginType === 'wx') {
+                params = {...params, ...this.wxInfo};
+            }
+            login(params).then((res: any) => {
                 if (res.code === 200) {
                     const { token, id, userName } = res.data;
                     setUsername(userName);
@@ -118,6 +130,30 @@ import { setUsername, setUid, setToken } from '@/libs/session';
                 }
             }, 1000);
         },
+        handleWxLogin(code, state) {
+            wxLogin({code}).then((res: any) => {
+                console.log(res);
+                if (res.code === 200) {
+                    const { isNessBindPhoneNum } = res.data;
+                    if (isNessBindPhoneNum) {
+                        this.$toast('请先绑定手机号');
+                        this.wxInfo = res.data;
+                        this.loginType = 'wx';
+                    } else {
+                        // 已经绑定，正常登录
+                        const { token, id, userName } = res.data;
+                        setUsername(userName);
+                        setUid(id);
+                        setToken(token);
+                        this.$toast('登录成功');
+                        this.$router.replace('/home');
+                    }
+                } else if (res.code === 201) {
+                    this.$toast('扫码失败，请重新扫码');
+                    this.$router.replace('/login');
+                }
+            });
+        },
         handlePhonefocus() {
             this.isPhoneValidate = !isPhone(this.userInfo.phone);
         },
@@ -147,6 +183,22 @@ export default class Login extends Vue {};
         background: $white;
         border-radius: 8px;
         box-shadow: 0 0 14px 2px $shadowColor;
+        &-wx_info {
+            text-align: center;
+            &-img {
+                width: 50px;
+                height: 50px;
+                border-radius: 50%;
+            }
+            &-nick {
+                font: 400 20px/1.5 '';
+            }
+            &-tips {
+                color: #999;
+                font: 400 14px/20px '';
+                margin-top: 30px;
+            }
+        }
         &-form {
             padding-top: 20px;
             &-item {

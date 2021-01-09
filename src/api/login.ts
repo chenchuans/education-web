@@ -19,3 +19,11 @@ export const getCode = (data: any): AxiosPromise<ResponseType> => {
         method: 'post',
     });
 };
+
+export const wxLogin = (data: any): AxiosPromise<ResponseType> => {
+    const { code } = data;
+    return ajax.request({
+        url: baseUrl + `/user/userWXVerification?code=${code}`,
+        method: 'get',
+    });
+};
