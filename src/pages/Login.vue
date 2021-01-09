@@ -105,8 +105,8 @@ import { setUsername, setUid, setToken } from '@/libs/session';
         handleCode() {
             if (!this.disabled) {
                 this.handlePhonefocus();
-                const { isPhoneValidate, isCodeValidate }  = this;
-                if (isPhoneValidate || isCodeValidate) {
+                const { isPhoneValidate }  = this;
+                if (isPhoneValidate) {
                     return;
                 }
                 this.handleCountdown();
@@ -132,7 +132,6 @@ import { setUsername, setUid, setToken } from '@/libs/session';
         },
         handleWxLogin(code, state) {
             wxLogin({code}).then((res: any) => {
-                console.log(res);
                 if (res.code === 200) {
                     const { isNessBindPhoneNum } = res.data;
                     if (isNessBindPhoneNum) {
