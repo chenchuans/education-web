@@ -33,6 +33,7 @@
         <!-- 选择课程的弹窗 -->
         <van-overlay :show="isOverlay">
             <div class="wrapper">
+                <h4>请先选择课程版本</h4>
                 <van-radio-group v-model="currentVersionId">
                     <van-radio v-for="(item, index) in versionList" :key="index" :name="item.id">{{item.versionName}}</van-radio>
                 </van-radio-group>
