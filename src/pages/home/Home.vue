@@ -50,6 +50,7 @@ import EdButton from '@/components/button/Index.vue';
                     if (res.data.courseInfos.length > 0) {
                         this.list = res.data.courseInfos.concat(this.list);
                     } else {
+                        this.$toast('暂无更多课程');
                         this.isMoreData = false;
                     }
                 }
