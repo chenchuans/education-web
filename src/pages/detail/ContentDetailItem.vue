@@ -23,6 +23,7 @@ import { Options, Vue } from "vue-class-component";
 import url from '@/api/baseUrl.ts';
 import EdButton from '@/components/button/Index.vue';
 import { payOrder } from '@/api';
+import { getUid, getToken } from '@/libs/session';
 
 @Options({
     name: 'ContentDetailItem',
@@ -40,6 +41,12 @@ import { payOrder } from '@/api';
     },
     methods: {
         handlePayment(courseId) {
+            const uid: string = getUid();
+            const token: string = getToken();
+            if (!uid || !token) {
+                this.$router.push('/login');
+                return;
+            }
             // courseId 发请求生成订单后，跳转到支付页面
             payOrder({courseId}).then((res: any) => {
                 if (res.code === 200) {
