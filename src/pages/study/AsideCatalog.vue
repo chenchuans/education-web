@@ -100,12 +100,15 @@ export default class Catalog extends Vue {};
     box-sizing: border-box;
     color: #333;
     &-title {
-        font: 14px/30px '';
         text-align: left;
+        font-size: 14px;
+        line-height: 30px;
     }
     &-sub_title {
         padding: 20px 0;
-        font: 500 20px/30px '';
+        font-weight: 500;
+        font-size: 20px;
+        line-height: 30px;
         span {
             font-size: 14px;
         }
@@ -113,13 +116,15 @@ export default class Catalog extends Vue {};
     &-list {
         &-item {
             &-title {
-                font: 400 16px/30px '';
+                font-size: 16px;
+                line-height: 30px;
                 height: 30px;
                 padding-left: 20px;
                 cursor: pointer;
             }
             &-p {
-                font: 400 14px/30px '';
+                font-size: 14px;
+                line-height: 30px;
                 height: 30px;
                 padding-left: 40px;
                 width: 260px;
@@ -152,7 +157,8 @@ export default class Catalog extends Vue {};
             overflow: hidden;
             text-overflow: ellipsis;
             white-space: nowrap;
-            font: 400 16px/30px '';
+            font-size: 16px;
+            line-height: 30px;
             padding-bottom: 10px;
             text-indent: 10px;
         }

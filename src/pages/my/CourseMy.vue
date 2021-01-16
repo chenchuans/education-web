@@ -62,7 +62,8 @@ export default class CourseMy extends Vue {};
     min-height: 300px;
     &-title {
         margin-bottom: 20px;
-        font: 400 30px/1.5 '';
+        font-size: 30px;
+        line-height: 46px;
     }
     &-list {
         &-item {
@@ -88,12 +89,14 @@ export default class CourseMy extends Vue {};
                     justify-content: space-between;
                     flex-direction: column;
                     &-title {
-                        font: 18px/22px '';
+                        font-size: 18px;
+                        line-height: 22px;
                         color: $fontColor;
                         cursor: pointer;
                     }
                     &-p {
-                        font: 14px/22px '';
+                        font-size: 14px;
+                        line-height: 22px;
                         color: $tipsColor;
                     }
                 }

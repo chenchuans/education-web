@@ -91,7 +91,8 @@ export default class Answer extends Vue {};
         min-height: 100px;
         background: $orangeBackground;
         &-name {
-            font: 400 16px/22px '';
+            font-size: 16px;
+            line-height: 22px;
             color: $tipsColor;
         }
         &-content {
@@ -106,7 +107,9 @@ export default class Answer extends Vue {};
                 border: 0;
                 outline: none;
                 color: $fontColor;
-                font: 500 16px/40px '';
+                font-size: 16px;
+                line-height: 40px;
+                font-weight: 500;
                 text-indent: 10px;
                 border-radius: 5px;
                 -webkit-appearance: textfield;
@@ -118,13 +121,15 @@ export default class Answer extends Vue {};
                 background: #5DB756;
                 color: #fff;
                 text-align: center;
-                font: 16px/40px '';
+                font-size: 16px;
+                line-height: 40px;
                 border-radius: 4px;
                 cursor: pointer;
             }
         }
         &-tips {
-            font: 400 14px/20px '';
+            font-size: 14px;
+            line-height: 20px;
             color: #5DB756;
             margin-bottom: 10px;
         }
@@ -134,7 +139,8 @@ export default class Answer extends Vue {};
                 margin-right: 20px;
             }
             &-span {
-                font: 16px/30px '';
+                font-size: 16px;
+                line-height: 30px;
                 text-decoration: underline;
                 cursor: pointer;
             }

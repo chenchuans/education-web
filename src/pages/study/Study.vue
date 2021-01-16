@@ -86,11 +86,11 @@ import $ from 'jquery';
                 const domList = $('.study-content-list-item');
                 let height = 0;
                 for (let index = 0; index < domList.length; index++) {
-                    height = height + $(domList[index]).height();
+                    height = height + $(domList[index]).outerHeight();
                 }
                 $('html, body .study-content-list').animate({
                     'scrollTop': height + 500
-                }, 1000);
+                }, 100);
             });
         }
     }
@@ -112,12 +112,14 @@ export default class Study extends Vue {};
         z-index: 1;
         background: #fff;
         border-bottom: 1px solid $homeBarBorderColor;
-        font: 400 20px/50px '';
+        font-size: 20px;
+        line-height: 50px;
         text-align: center;
         &-return {
             border: none;
             float: left;
-            font: 400 20px/50px '';
+            font-size: 20px;
+            line-height: 50px;
         }
     }
     &-content {
@@ -137,11 +139,13 @@ export default class Study extends Vue {};
             padding: 80px 0;
             transition: all .5s;
             &-item {
-                font: 400 20px/2 '';
+                font-size: 20px;
+                line-height: 40px;
                 letter-spacing: 2;
                 padding: 20px;
                 &-sub_title {
-                    font: 500 30px/2 '';
+                    font-size: 30px;
+                    line-height: 60px;
                     color: $orangeFontColor;
                 }
                 &-title {
@@ -191,7 +195,8 @@ export default class Study extends Vue {};
             height: 50px;
             position: absolute;
             bottom: 0;
-            font: 500 20px/50px '';
+            font-size: 20px;
+            line-height: 50px;
             background-color: $orangeFontColor;
             color: #fff;
             text-align: center;

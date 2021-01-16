@@ -80,7 +80,8 @@ export default class OrderMy extends Vue {};
     }
     &-list {
         &-nav {
-            font: 400 14px/24px '';
+            font-size: 14px;
+            line-height: 24px;
             padding: 0 20px;
             display: flex;
             justify-content: space-between;
@@ -98,7 +99,8 @@ export default class OrderMy extends Vue {};
             &-header {
                 height: 50px;
                 padding: 0 20px;
-                font: 400 14px/50px '';
+                font-size: 14px;
+                line-height: 50px;
                 color: #888;
                 background: #f6f7fb;
                 &-num {
@@ -126,12 +128,14 @@ export default class OrderMy extends Vue {};
                         width: 200px;
                         box-sizing: border-box;
                         padding-right: 20px;
-                        font: 16px/24px '';
+                        font-size: 16px;
+                        line-height: 24px;
                         color: $fontColor;
                     }
                 }
                 &-text {
-                    font: 16px/80px '';
+                    font-size: 16px;
+                    line-height: 80px;
                 }
                 &-text:nth-of-type(1) {
                     width: 300px;
@@ -142,7 +146,9 @@ export default class OrderMy extends Vue {};
                 &-price {
                     width: 150px;
                     text-align: right;
-                    font: 500 16px/80px '';
+                    font-weight: 500;
+                    font-size: 16px;
+                    line-height: 80px;
                     color: $orangeFontColor;
                 }
             }
