@@ -56,15 +56,15 @@ import QRCode from 'qrcode';
         },
         handleOrder() {
             // 点击确认订单，查询订单是否完成
-            this.$toast('购买成功');
-            this.$router.replace('/order-my');
-            // const { orderId } = this.orderInfo;
-            // getOrderStatus({orderId}).then((res: any) => {
-            //     if (res.code === 200) {
-            //         this.$toast('购买成功');
-            //         this.$router.replace('/order-my');
-            //     }
-            // });
+            const { orderId } = this.orderInfo;
+            getOrderStatus({orderId}).then((res: any) => {
+                if (res.code === 200) {
+                    this.$toast('购买成功');
+                    this.$router.replace('/course-my');
+                } else {
+                    this.$toast('还没查到订单信息，如果您已经微信支付成功，请稍后再试！');
+                }
+            });
         }
     }
 })

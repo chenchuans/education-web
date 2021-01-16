@@ -34,8 +34,8 @@
         <van-overlay :show="isOverlay">
             <div class="wrapper">
                 <h4>请先选择课程版本</h4>
-                <van-radio-group v-model="currentVersionId">
-                    <van-radio v-for="(item, index) in versionList" :key="index" :name="item.id">{{item.versionName}}</van-radio>
+                <van-radio-group class="wrapper-radio" v-model="currentVersionId">
+                    <van-radio class="wrapper-radio-item" v-for="(item, index) in versionList" :key="index" :name="item.id">{{item.versionName}}</van-radio>
                 </van-radio-group>
                 <ed-button @click="selectVersion" type="dark" class="bottom">确定</ed-button>
             </div>
@@ -215,6 +215,12 @@ export default class CatalogList extends Vue {};
         left: 50%;
         top: 50%;
         text-align: center;
+        &-radio {
+            padding: 20px 60px;
+            &-item {
+                margin-top: 10px;
+            }
+        }
         .bottom {
             margin-top: 20px;
         }
@@ -236,10 +242,8 @@ export default class CatalogList extends Vue {};
             height: 300px !important;
         }
         &-order {
-
             &-tips {
                 font: 14px/1 '';
-
             }
         }
     }

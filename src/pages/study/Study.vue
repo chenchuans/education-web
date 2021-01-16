@@ -14,7 +14,7 @@
                     <div v-if="item.courseContentType === 'IMAGE'" class="study-content-list-item-image">
                         <img class="study-content-list-item-image-img" :src="`${imageUrl}${item.content}`" alt=""/>
                     </div>
-                    <div :id="`chapter${item.chapterId}`" v-if="item.courseContentType === 'TEXT'" class="study-content-list-item-text"> {{item.content}}</div>
+                    <div :id="`chapter${item.chapterId}`" v-if="item.courseContentType === 'TEXT'" class="study-content-list-item-text">{{item.content}}</div>
                     <answer v-if="item.courseContentType === 'ANSWER'" :answerItem="item" class="study-content-list-item-answer"/>
                 </li>
             </ul>
@@ -52,8 +52,6 @@ import $ from 'jquery';
     created() {
         this.getInfo();
     },
-    mounted() {
-    },
     methods: {
         getInfo() {
             const { catalogId, courseId } = this.$route.query;
@@ -84,10 +82,16 @@ import $ from 'jquery';
             });
         },
         scrollBottom() {
-            const top  = $('html, body .study-content-list').outerHeight();
-            $('html, body .study-content-list').animate({
-                'scrollTop': top + 300
-            }, 1000);
+            this.$nextTick(() => {
+                const domList = $('.study-content-list-item');
+                let height = 0;
+                for (let index = 0; index < domList.length; index++) {
+                    height = height + $(domList[index]).height();
+                }
+                $('html, body .study-content-list').animate({
+                    'scrollTop': height + 500
+                }, 1000);
+            });
         }
     }
 })
@@ -127,7 +131,7 @@ export default class Study extends Vue {};
         transition: all .5s;
         &-list {
             width: 1200px;
-            height: 100vh;
+            // height: 100vh;
             overflow: scroll;
             box-sizing: border-box;
             padding: 80px 0;
