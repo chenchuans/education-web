@@ -56,13 +56,15 @@ import QRCode from 'qrcode';
         },
         handleOrder() {
             // 点击确认订单，查询订单是否完成
-            const { orderId } = this.orderInfo;
-            getOrderStatus({orderId}).then((res: any) => {
-                if (res.code === 200) {
-                    this.$toast('购买成功');
-                    this.$router.replace('/order-my');
-                }
-            });
+            this.$toast('购买成功');
+            this.$router.replace('/order-my');
+            // const { orderId } = this.orderInfo;
+            // getOrderStatus({orderId}).then((res: any) => {
+            //     if (res.code === 200) {
+            //         this.$toast('购买成功');
+            //         this.$router.replace('/order-my');
+            //     }
+            // });
         }
     }
 })
