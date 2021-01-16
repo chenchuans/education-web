@@ -59,10 +59,12 @@ import QRCode from 'qrcode';
             const { orderId } = this.orderInfo;
             getOrderStatus({orderId}).then((res: any) => {
                 if (res.code === 200) {
-                    this.$toast('购买成功');
-                    this.$router.replace('/course-my');
-                } else {
-                    this.$toast('还没查到订单信息，如果您已经微信支付成功，请稍后再试！');
+                    if (res.data.isDone) {
+                        this.$toast('购买成功');
+                        this.$router.replace('/course-my');
+                    } else {
+                       this.$toast('还没查到订单信息，如果您已经微信支付成功，请稍后再试！');
+                    }
                 }
             });
         }
