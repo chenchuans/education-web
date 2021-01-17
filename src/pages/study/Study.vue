@@ -90,7 +90,7 @@ import $ from 'jquery';
                 }
                 $('html, body .study-content-list').animate({
                     'scrollTop': height + 500
-                }, 100);
+                }, 300);
             });
         }
     }
