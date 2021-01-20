@@ -190,11 +190,13 @@ export default class Login extends Vue {};
                 border-radius: 50%;
             }
             &-nick {
-                font: 400 20px/1.5 '';
+                font-size: 20px;
+                line-height: 30px;
             }
             &-tips {
                 color: #999;
-                font: 400 14px/20px '';
+                font-size: 14px;
+                line-height: 20px;
                 margin-top: 30px;
             }
         }
@@ -244,14 +246,17 @@ export default class Login extends Vue {};
             }
         }
         &-button {
-            font: 500 18px/46px '';
+            font-weight: 500;
+            font-size: 18px;
+            line-height: 46px;
             margin: 20px 0;
         }
         &-error {
             color: $errorColor;
             margin-bottom: 20px;
             text-align: center;
-            font: 400 14px/1 '';
+            font-size: 14px;
+            line-height: 14px;
             word-break: keep-all;
             white-space: nowrap;
         }
@@ -270,7 +275,8 @@ export default class Login extends Vue {};
             &-tips {
                 padding-top: 23px;
                 text-align: center;
-                font: 400 12px/1 '';
+                font-size: 12px;
+                line-height: 12px;
                 color: $tipsColor;
                 span {
                     cursor: pointer;
@@ -280,9 +286,9 @@ export default class Login extends Vue {};
     }
 }
 ::-webkit-input-placeholder { /* WebKit browsers */
-  color: #999;
-  font-size: 16px;
-  font-weight: 400;
+    color: #999;
+    font-size: 16px;
+    font-weight: 400;
 }
 </style>
 <style>

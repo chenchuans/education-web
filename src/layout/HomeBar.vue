@@ -75,7 +75,8 @@ export default class HomeBar extends Vue {
     z-index: 1;
     background-color: $white;
     border-bottom: 1px solid $homeBarBorderColor;
-    font: 400 16px/70px '';
+    font-size: 16px;
+    line-height: 70px;
     &-wrapper {
         width: 1200px;
         height: 100%;
