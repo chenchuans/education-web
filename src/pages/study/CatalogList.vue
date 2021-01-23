@@ -154,6 +154,7 @@ import QRCode from 'qrcode';
                 if (res.code === 200) {
                     if (res.data.isDone) {
                         this.$toast('购买成功');
+                        this.payPopup = false;
                         this.getInfo();
                     } else {
                        this.$toast('还没查到订单信息，如果您已经微信支付成功，请稍后再试！');
