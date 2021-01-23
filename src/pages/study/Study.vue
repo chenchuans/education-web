@@ -156,6 +156,13 @@ export default class Study extends Vue {};
                     width: 100%;
                     height: 100%;
                     margin: 0 auto;
+                    img {
+                        width: 100%;
+                        background-repeat: no-repeat;
+                        background-size: cover;
+                        -webkit-background-size: cover;
+                        -o-background-size: cover;
+                    }
                 }
                 &-text {
                     font-size: 18px;

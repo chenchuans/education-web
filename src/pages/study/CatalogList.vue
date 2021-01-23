@@ -25,7 +25,8 @@
                     <!-- <p v-if="item.isHaveAuth" class="catalog-list-item-time">2020年11月2日</p> -->
                     <footer v-if="item.isHaveAuth" class="catalog-list-item-footer">
                         <span class="catalog-list-item-footer-status">已完成{{item.rateOLearn}}%</span>
-                        <ed-button type="dark" class="catalog-list-item-footer-button">{{item.rateOLearn === 100 ? '复习' : '继续学习'}}</ed-button>
+                        <ed-button type="dark" v-if="!item.isNeedPay" class="catalog-list-item-footer-button">{{item.rateOLearn === 100 ? '复习' : '继续学习'}}</ed-button>
+                        <ed-button type="dark" v-else class="catalog-list-item-footer-button">立即购买</ed-button>
                     </footer>
                 </li>
             </ul>
@@ -42,20 +43,42 @@
         </van-overlay>
         <!-- 进阶课购买 -->
         <van-overlay :show="payPopup">
-            <div class="pay">
-                <canvas id="code"></canvas>
-                <p class="pay-order">
-                    <span class="pay-order-tips">支付完成请点击确定查询订单状态</span>
-                    <ed-button @click="selectVersion" type="dark" class="bottom">确定</ed-button>
-                </p>
-            </div>
+            <section class="payment">
+                <h2 class="payment-title">支付金额<span>￥{{orderInfo.price}}</span>,请使用微信扫描下面二维码完成付款</h2>
+                <div class="payment-section">
+                    <canvas id="code"></canvas>
+                    <ul class="payment-section-info">
+                        <li class="payment-section-info-p">
+                            <span class="payment-section-info-p-key">商家名称:</span>
+                            <span class="payment-section-info-p-value">{{orderInfo.businessName}}</span>
+                        </li>
+                        <li class="payment-section-info-p">
+                            <span class="payment-section-info-p-key">课程名称:</span>
+                            <span class="payment-section-info-p-value">{{orderInfo.goodName}}</span>
+                        </li>
+                        <li class="payment-section-info-p">
+                            <span class="payment-section-info-p-key">交易单号:</span>
+                            <span class="payment-section-info-p-value">{{orderInfo.orderId}}</span>
+                        </li>
+                        <li class="payment-section-info-p">
+                            <span class="payment-section-info-p-key">创建时间:</span>
+                            <span class="payment-section-info-p-value">{{handleTime(+orderInfo.orderTime)}}</span>
+                        </li>
+                        <li class="payment-section-info-p">
+                            <span class="payment-section-info-p-key">支付完成请点击确认完成</span>
+                        </li>
+                        <ed-button @click="confirmOrder" height="40px" width="100px" type="dark">确认完成</ed-button>
+                    </ul>
+                </div>
+            </section>
         </van-overlay>
     </div>
 </template>
 
 <script lang="ts">
 import { Options, Vue } from "vue-class-component";
-import { getCatalogList, submitVersion } from '@/api';
+import { getCatalogList, submitVersion, paySecondOrder, getSecondOrderStatus } from '@/api';
+import { formatterTime } from '@/libs/utils';
 import EdButton from '@/components/button/Index.vue';
 import url from '@/api/baseUrl.ts';
 import QRCode from 'qrcode';
@@ -70,7 +93,8 @@ import QRCode from 'qrcode';
             catalogList: [],
             imageUrl: url.imageUrl,
             courseInfo: {},
-            versionList: []
+            versionList: [],
+            orderInfo: {}
         }
     },
     created() {
@@ -102,13 +126,42 @@ import QRCode from 'qrcode';
                 }
             });
         },
-        handleStudy(index, {courseId, catalogId, isHaveAuth, catalogName}) {
+        handleTime(time) {
+            return formatterTime(time);
+        },
+        handleStudy(index, {courseId, catalogId, isHaveAuth, catalogName, isNeedPay}) {
+            if (isNeedPay) {
+                // 需要购买的逻辑
+                this.payPopup = true;
+                paySecondOrder({ courseId }).then((res: any) => {
+                    if (res.code === 200) {
+                        this.orderInfo = res.data;
+                        this.handleCode(res.data.codeUrl);
+                    }
+                });
+                return;
+            }
             if (isHaveAuth) {
+                // 直接去详情页面学习
                 const { courseName } = this.courseInfo;
                 this.$router.push(`/study?courseId=${courseId}&catalogId=${catalogId}&courseName=${courseName}&catalogName=${catalogName}&index=${index + 1}`);
             }
         },
-        handleCode(codeUrl = 'weixin://wxpay/bizpayurl/up?pr=NwY5Mz9&groupid=00') {
+        confirmOrder() {
+            // 点击确认订单，查询订单是否完成
+            const { orderId } = this.orderInfo;
+            getSecondOrderStatus({orderId}).then((res: any) => {
+                if (res.code === 200) {
+                    if (res.data.isDone) {
+                        this.$toast('购买成功');
+                        this.getInfo();
+                    } else {
+                       this.$toast('还没查到订单信息，如果您已经微信支付成功，请稍后再试！');
+                    }
+                }
+            });
+        },
+        handleCode(codeUrl) {
             this.$nextTick(() => {
                 QRCode.toCanvas(document.getElementById('code'), codeUrl, error => {});
             });
@@ -225,10 +278,10 @@ export default class CatalogList extends Vue {};
             margin-top: 20px;
         }
     }
-    .pay {
-        width: 400px;
+    .payment {
+        width: 800px;
         height: 400px;
-        margin: -200px 0 0 -200px;
+        margin: -200px 0 0 -400px;
         left: 50%;
         top: 50%;
         position: absolute;
@@ -237,15 +290,43 @@ export default class CatalogList extends Vue {};
         border-radius: 5px;
         box-sizing: border-box;
         padding: 20px;
-        #code {
-            width: 300px !important;
-            height: 300px !important;
+        &-title {
+            font-size: 20px;
+            line-height: 30px;
+            padding-bottom: 10px;
+            text-align: center;
+            color: $formColor;
+            span {
+                font-size: 20px;
+                color: $errorColor;
+            }
         }
-        &-order {
-            &-tips {
-                font: 14px/1 '';
+        &-section {
+            display: flex;
+            justify-content: space-between;
+            #code {
+                width: 300px !important;
+                height: 300px !important;
+            }
+            &-info {
+                box-sizing: border-box;
+                padding-top: 20px;
+                width: 460px;
+                text-align: left;
+                &-p {
+                    font: 400 14px/30px '';
+                    letter-spacing: 1;
+                    margin-bottom: 20px;
+                    &-key {
+                        color: $tipsColor;
+                    }
+                    &-value {
+                        margin-left: 20px;
+                    }
+                }
             }
         }
     }
+
 }
 </style>
