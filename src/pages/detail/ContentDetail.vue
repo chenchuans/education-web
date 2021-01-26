@@ -65,7 +65,8 @@ export default class ContentDetail extends Vue {};
         &-content {
             margin: 10px 0;
             text-indent: 20px;
-            font: 400 16px/20px '';
+            font-size: 16px;
+            line-height: 20px;
             letter-spacing: 1px;
             padding-bottom: 30px;
             color: $formColor;
@@ -73,7 +74,8 @@ export default class ContentDetail extends Vue {};
         &-list {
             padding-bottom: 30px;
             &-item {
-                font: 400 16px/50px '';
+                font-size: 16px;
+                line-height: 50px;
                 height: 50px;
                 color: $fontColor;
                 cursor: pointer;
