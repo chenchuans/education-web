@@ -76,18 +76,23 @@ export default class ContentItem extends Vue {};
             justify-content: space-between;
             margin-bottom: 10px;
             &-title {
-                font: 500 20px/24px '';
+                font-size: 20px;
+                line-height: 24px;
+                font-weight: 500;
                 color: $formColor;
             }
             &-tips {
-                font: 300 14px/24px '';
+                font-size: 14px;
+                line-height: 24px;
+                font-weight: 300;
                 color: $tipsColor;
                 white-space: nowrap;
                 letter-spacing: 1px;
             }
         }
         &-teacher {
-            font: 400 14px/24px '';
+            font-size: 14px;
+            line-height: 24px;
             text-indent: 5px;
             max-width: 100%;
             color: $formColor;
@@ -97,7 +102,8 @@ export default class ContentItem extends Vue {};
             margin-bottom: 10px;
         }
         &-desc {
-            font: 400 14px/24px '';
+            font-size: 14px;
+            line-height: 24px;
             height: 76px;
             text-indent: 20px;
             overflow: hidden;
@@ -113,11 +119,13 @@ export default class ContentItem extends Vue {};
             &-price {
                 &-sale {
                     margin-right: 10px;
-                    font: 400 18px/2 '';
+                    font-size: 18px;
+                    line-height: 36px;
                     color: $orangeFontColor;
                 }
                 &-origin {
-                    font: 400 12px/3 '';
+                    font-size: 12px;
+                    line-height: 36px;
                     color: $tipsColor;
                     text-decoration: line-through;
                 }
