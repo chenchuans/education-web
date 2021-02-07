@@ -212,7 +212,9 @@ export default class Login extends Vue {};
                     border: 0;
                     outline: none;
                     color: $formColor;
-                    font: 500 18px/50px '';
+                    font-weight: 500;
+                    font-size: 50px;
+                    line-height: 18px;
                     -webkit-appearance: textfield;
                     border-bottom: 1px solid $inputBorderColor;
                 }

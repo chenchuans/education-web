@@ -123,7 +123,8 @@ export default class Home extends Vue {};
             font-size: 20px;
         }
         &-tips {
-            font: 400 12px/3 '';
+            font-size: 12px;
+            line-height: 36px;
             color: $tipsColor;
         }
     }
@@ -135,7 +136,8 @@ export default class Home extends Vue {};
         width: 100%;
         &-info {
             text-align: center;
-            font: 12px/30px '';
+            font-size: 12px;
+            line-height: 30px;
             color: #888;
         }
     }
