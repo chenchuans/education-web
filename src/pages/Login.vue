@@ -221,7 +221,8 @@ export default class Login extends Vue {};
                 &-error {
                     color: $errorColor;
                     margin-top: 10px;
-                    font: 400 14px/1 '';
+                    font-size: 14px;
+                    line-height: 14px;
                     word-break: keep-all;
                     white-space: nowrap;
                 }
@@ -233,7 +234,8 @@ export default class Login extends Vue {};
                     right: 0px;
                     top: 10px;
                     color: $orangeFontColor;
-                    font: 400 16px/2 '';
+                    font-size: 16px;
+                    line-height: 32px;
                     text-align: right;
                     width: 160px;
                     height: 32px;
