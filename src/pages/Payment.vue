@@ -84,7 +84,8 @@ export default class Payment extends Vue {};
     padding: 30px;
     border-radius: 10px;
     &-title {
-        font: 400 20px/30px '';
+        font-size: 20px;
+        line-height: 30px;
         padding-bottom: 10px;
         text-align: center;
         color: $formColor;
@@ -105,7 +106,8 @@ export default class Payment extends Vue {};
             padding-top: 20px;
             width: 460px;
             &-p {
-                font: 400 14px/30px '';
+                font-size: 14px;
+                line-height: 30px;
                 letter-spacing: 1;
                 margin-bottom: 20px;
                 &-key {
