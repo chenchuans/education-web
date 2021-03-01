@@ -195,7 +195,9 @@ export default class CatalogList extends Vue {};
             margin-right: 10px;
         }
         h4 {
-            font: 500 26px/70px '';
+            font-weight: 500;
+            line-height: 70px;
+            font-size: 26px;
         }
     }
     &-list {
@@ -216,11 +218,13 @@ export default class CatalogList extends Vue {};
             cursor: pointer;
             box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.15);
             &-title {
-                font: 400 18px/1.5 '';
+                font-size: 18px;
+                line-height: 1.5;
                 margin-bottom: 10px;
             }
             &-time {
-                font: 400 16px/20px '';
+                font-size: 16px;
+                line-height: 20px;
                 padding: 10px 0;
                 color: $tipsColor;
             }
@@ -234,7 +238,8 @@ export default class CatalogList extends Vue {};
                     border-radius: 5px;
                     height: 30px;
                     padding: 0 10px;
-                    font: 14px/30px '';
+                    font-size: 14px;
+                    line-height: 30px;
                 }
             }
         }
@@ -254,7 +259,8 @@ export default class CatalogList extends Vue {};
         }
     }
     &-type {
-        font: 20px/1.5 '';
+        font-size: 20px;
+        line-height: 1.5;
         text-align: center;
     }
     .wrapper {
@@ -315,7 +321,8 @@ export default class CatalogList extends Vue {};
                 width: 460px;
                 text-align: left;
                 &-p {
-                    font: 400 14px/30px '';
+                    font-size: 14px;
+                    line-height: 30px;
                     letter-spacing: 1;
                     margin-bottom: 20px;
                     &-key {
